@@ -1,0 +1,258 @@
+﻿@model covid19_wld.Model.ViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Weather";
+}
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Weather
+    </title>   
+    <link rel="icon" href="~/Images/covid-icon.png" type="image/x-icon">
+    <script data-require="jquery" data-semver="2.2.0" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <link href="~/bootstrap-new/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/bootstrap-new/js/bootstrap.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/Weather.css" type="text/css" />
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#16394c;">
+        <a class="navbar-brand" href="@Url.Action("Index","Home", new { })">RISHI</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="@Url.Action("Index","Home", new { })">COVID19-INDIA <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link active" href="@Url.Action("Weather","Home", new { })">WEATHER</a>
+                <a class="nav-item nav-link" href="@Url.Action("Vaccine","Home", new { })">VACCINE</a>
+                @*<a class="nav-item nav-link" href="@Url.Action("Birthday","Home", new { })">BIRTHDAY</a>
+        <a class="nav-item nav-link" href="@Url.Action("Maps","Home", new { })">MAPS</a>*@
+            </div>
+        </div>
+    </nav>
+    <section class="hero index">
+
+        <div class="container" style="cursor: move;">
+            @Html.AntiForgeryToken()
+            <div class="hero_main">
+
+                <div class="weather_animated" id="weather_div">
+
+                    <div class="location">
+
+                        <span data-api="location">@Model.ValidIPAddress.city, @Model.ValidIPAddress.regionName, @Model.ValidIPAddress.country</span>
+
+                    </div>
+
+                    <div class="main_left">
+
+                        <img id="weather_icons" src="@Model.Weather.Current.WeatherIcons[0].AbsoluteUri" />
+                        @foreach (var result in Model.Weather.Current.WeatherDescriptions)
+                        {
+                            <span data-api="weather_descriptions">@result</span>
+                        }
+
+                    </div>
+
+                    <div class="main_right">
+
+                        @*<span data-api="max_temp" class="Maxtemp">Max-Temp: @Model.maxtemp°c</span>
+                    <span data-api="min_temp" class="Mintemp">Min-Temp: @Model.mintemp°c</span>*@
+                        <span data-api="current_wind_speed" class="windspeed">Wind: @Model.Weather.Current.WindSpeed kmph</span>
+                        <span data-api="current_precip" class="Precip">Precip: @Model.Weather.Current.Precip mm</span>
+                        <span data-api="current_temperature" class="Humidity">Humidity: @Model.Weather.Current.Humidity%</span>
+                        <span data-api="current_pressure" class="Pressure">Pressure: @Model.Weather.Current.Pressure mb</span>
+                        <span data-api="current_temperature" class="temperature">@Model.Weather.Current.Temperature°c</span>
+
+                        <button type="button" class="btn btn-success" id="LOC" data-toggle="" data-target="#myModal" onclick="showModalPopUp()">Location-Details</button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="background-color:rgb(22,57,76);border: 2px solid rgba(0,0,0,.2);border-radius: .5rem;cursor: move;">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Location-Details</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                    @if (Model.ValidIPAddress.countryCode == Model.IPAddress.country_code)
+                                    {
+                                        <div class="modal-body">
+                                            <div class="location1">
+
+                                                <span data-api="location" id="modaladdressdetails">@Model.ValidIPAddress.city, @Model.ValidIPAddress.regionName, @Model.ValidIPAddress.country</span>
+
+                                            </div>
+
+                                            <div class="main_left1">
+
+
+                                                <img id="weather_icons" src="@Model.IPAddress.location.country_flag" />
+                                                <span data-api="weather_descriptions">@Model.IPAddress.location.capital, @Model.IPAddress.country_name</span>
+
+
+                                            </div>
+                                            <div class="main_right1" id="modal-mobile-div">
+
+                                                <span data-api="current_wind_speed">Phone-Code: +@Model.IPAddress.location.calling_code </span>
+                                                <span data-api="current_precip">Latitude: @Model.ValidIPAddress.lat</span>
+                                                <span data-api="current_temperature">Longitude: @Model.ValidIPAddress.lon</span>
+                                                <span data-api="current_pressure">Zip-Code: @Model.ValidIPAddress.zip</span>
+                                                <span data-api="current_pressure">Language: @Model.IPAddress.location.languages[0].name</span>
+                                                <span data-api="current_temperature" id="modal-mobile" class="temperature1">IP:@Model.IPAddress.ip</span>
+
+                                            </div>
+
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="modal-body">
+                                            <div class="location1">
+
+                                                <span data-api="location" id="modaladdressdetails">@Model.ValidIPAddress.city, @Model.ValidIPAddress.regionName, @Model.ValidIPAddress.country</span>
+
+                                            </div>
+
+                                            <div class="main_left1_timezone">
+
+                                                <span data-api="timezone">Timezone: @Model.ValidIPAddress.timezone</span>
+                                                <span data-api="weather_descriptions">@Model.ValidIPAddress.country</span>
+
+
+                                            </div>
+                                            <div class="modal_validip" id="modal-mobile-div-2">
+
+                                                <span data-api="current_precip">Latitude: @Model.ValidIPAddress.lat</span>
+                                                <span data-api="current_temperature">Longitude: @Model.ValidIPAddress.lon</span>
+                                                <span data-api="current_pressure">Zip-Code: @Model.ValidIPAddress.zip</span>
+                                                <span data-api="current_temperature" id="modal-mobile-2" class="validip_temp">IP:@Model.ValidIPAddress.query</span>
+
+                                            </div>
+
+                                        </div>
+                                    }
+
+                                    <div class="modal-footer">
+                                        <button type="button" id="mapsbutton_footer" class="btn btn-default" style="color: white;" onclick="showMapsPopUp('Lat-@Model.IPAddress.latitude' + '-Lon-@Model.IPAddress.longitude')"><b>Live Location</b></button>
+                                        <button type="button" id="closebutton_footer" class="btn btn-default" data-dismiss="modal"><b>Close</b></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    @{
+        string language = Model.IPAddress.location.languages[0].name;
+    }
+    <!-- Button trigger modal -->
+
+    <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        $('.modal-content').resizable({
+            minHeight: 325,
+            minWidth: 525
+        });
+        $('.modal-dialog').draggable();
+
+        $('#myModal').on('show.bs.modal', function () {
+            $(this).find('.modal-body').css({
+                'max-height': '100%'
+            });
+        });
+
+        $(document).ready(function () {            
+            $('.container').draggable();
+            alert("The details are based on IP Address. So, Please disconnect VPN if any to get accurate details.");
+        });
+
+        //function showModalPopUp() {
+        //    //alert("You are about to see your Location and IP address details");
+        //    if (confirm('You are about to see your Location and IP address details')) {
+        //        // Save it!
+        //        $('#LOC').attr('data-toggle', 'modal');
+        //        console.log('Ok');
+        //    } else {
+        //        // Do nothing!
+        //        $('#LOC').attr('data-toggle', '');
+        //        console.log('Hide');
+        //    }
+        //}
+
+        function showModalPopUp() {
+            $('#LOC').attr('data-toggle', 'modal');
+        }
+
+        function showMapsPopUp(event) {
+            var searchLocation = '';
+            searchLocation = event;
+            var urlLocation = '@Url.Action("Maps", "Home")';
+            urlLocation = urlLocation + '?s=' + searchLocation;
+                $.ajax({
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        url: urlLocation,
+                        beforeSend: function (xhr) { // RequestVerificationToken is required since we have added AutoValidateAntiforgeryTokenAttribute in the Startup.cs
+                            xhr.setRequestHeader("RequestVerificationToken",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                        },
+                        async: true,
+                        success: function (result) {
+                        if (result.success == true)
+                        window.location.href = result.url;
+                        },
+                        error: function (jqXHR, exception) {
+                        var msg = '';
+                        if (jqXHR.status === 0) {
+                            msg = 'Not connect.\n Verify Network.';
+                            alert(msg);
+                        } else if (jqXHR.status == 404) {
+                            msg = 'Requested page not found. [404]';
+                            alert(msg);
+                        } else if (jqXHR.status == 500) {
+                            msg = 'Internal Server Error [500].';
+                            $('#errordate').show();
+                            if ($("#state").val() == "") {
+                                $('#errorstate').show();
+                            }
+                            $('#showloding').hide();
+                        } else if (exception === 'parsererror') {
+                            msg = 'Requested JSON parse failed.';
+                            alert(msg);
+                        } else if (exception === 'timeout') {
+                            msg = 'Time out error.';
+                            alert(msg);
+                        } else if (exception === 'abort') {
+                            msg = 'Ajax request aborted.';
+                            alert(msg);
+                        } else {
+                            msg = 'Error.\n' + jqXHR.responseText;
+                            alert(msg);
+                        }
+                    }
+                });
+        }
+
+    </script>
+</body>
+</html>

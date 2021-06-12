@@ -1,0 +1,32 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:57165",
+      "sslPort": 0
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "Home/Index",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "VaultUri": "https://covid-19-wld-keys.vault.azure.net/",
+        "AZURE_USERNAME": "rishi.raj.reddy.busanelli@sap.com"
+      }
+    },
+    "covid19_wld": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "VaultUri": "https://covid-19-wld-keys.vault.azure.net/",
+        "AZURE_USERNAME": "rishi.raj.reddy.busanelli@sap.com"
+      }
+    }
+  }
+}

@@ -1,0 +1,160 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "BIRTHDAY";
+}
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Birth-Day
+    </title>
+    <link rel="icon" href="~/Images/covid-icon.png" type="image/x-icon">
+    <script data-require="jquery" data-semver="2.2.0" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <link href="~/bootstrap-new/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/bootstrap-new/js/bootstrap.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/Birthday.css" type="text/css" />
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#7D1452;">
+        <a class="navbar-brand" href="@Url.Action("Index","Home", new { })">RISHI</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="@Url.Action("Index","Home", new { })">COVID19-INDIA <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="@Url.Action("Weather","Home", new { })">WEATHER</a>
+                <a class="nav-item nav-link active" href="@Url.Action("Birthday","Home", new { })">BIRTHDAY</a>
+                <a class="nav-item nav-link" href="@Url.Action("Maps","Home", new { })">MAPS</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="jumbotron">
+        @Html.AntiForgeryToken()
+        <h1 class="display-4">Hello, Human!</h1>
+        <p class="lead">Interested to surprise someone. Please contact Gmail-rishi22raj94@gmail.com</p>
+        <hr class="my-4">
+        <p>By entering your unique password you will be allowed to enter into your surprised website only designed for you.</p>
+        <p class="lead">
+            <button type="button" class="btn btn-primary" id="birthday" data-toggle="modal" data-target="#myModal">Password</button>
+        </p>
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="background-color:ghostwhite;border: 2px solid rgba(0,0,0,.2);border-radius: .5rem;cursor: move;">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Enter Password</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="text" id="birthday-pass" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="closebutton_footer" class="btn btn-default" data-dismiss="modal"><b>Close</b></button>
+                    <button type="button" id="save_footer" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        $('.modal-content').resizable({
+            minHeight: 325,
+            minWidth: 525
+        });
+        $('.modal-dialog').draggable();
+
+        $('#myModal').on('show.bs.modal', function () {
+            $(this).find('.modal-body').css({
+                'max-height': '100%'
+            });
+        });
+
+        $("#save_footer").on("click", function () {
+            var password = $("#birthday-pass").val().trim();
+            var valid = $.trim(password) === "Rishi@26";
+            if (valid) {               
+                var newUrl = '@Html.Raw(Url.Action("BirthdayMain", "Home", new { valid = true}))' + '&password=' + password;
+                var birthdaydata = JSON.stringify({
+                    'password': password,
+                    'valid': true
+                });
+                $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: '@Url.Action("Birthday", "Home")',
+                        data: birthdaydata,
+                        contentType: "application/json",
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("RequestVerificationToken",
+                                $('input:hidden[name="__RequestVerificationToken"]').val());
+                        },
+                        async: false,
+                        processData: false,
+                        cache: false,
+                        success: function (result) {
+                            $("#myModal").modal('hide');
+                        },
+
+                        error: function (jqXHR, exception) {
+                            var msg = '';
+                            if (jqXHR.status === 0) {
+                                msg = 'Not connect.\n Verify Network.';
+                                alert(msg);
+                            } else if (jqXHR.status == 404) {
+                                msg = 'Requested page not found. [404]';
+                                alert(msg);
+                            } else if (jqXHR.status == 500) {
+                                msg = 'Internal Server Error [500].';
+                                $('#errordate').show();
+                                if ($("#state").val() == "") {
+                                    $('#errorstate').show();
+                                }
+                                $('#showloding').hide();
+                            } else if (exception === 'parsererror') {
+                                msg = 'Requested JSON parse failed.';
+                                alert(msg);
+                            } else if (exception === 'timeout') {
+                                msg = 'Time out error.';
+                                alert(msg);
+                            } else if (exception === 'abort') {
+                                msg = 'Ajax request aborted.';
+                                alert(msg);
+                            } else {
+                                msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                                alert(msg);
+                            }
+                        }
+
+                    }).done(function (result) {
+                         if (result.status === "success") {
+                             window.location.href = newUrl;
+                        }
+                        else {
+                             alert("REQUEST FAILED");
+                        }
+                    });
+            }
+            else {
+                $("#birthday-pass").val("Password Not Found").css("color", "red");
+            }
+        });
+    </script>
+</body>
+</html>

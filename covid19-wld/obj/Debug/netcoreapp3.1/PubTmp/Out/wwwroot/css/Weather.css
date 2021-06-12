@@ -1,0 +1,338 @@
+﻿@media screen and (min-width: 1024px) {
+    section.hero .container .weather_animated {
+        height: 280px;
+        width: 500px;
+        position: absolute;
+        border-radius: 10px;
+        right: 365px;
+        top: 125px;
+        border: 4px solid #608094;
+        background: #16394c;
+    }
+
+        section.hero .container .weather_animated .modal_validip #modal-mobile-2 {
+            position: absolute;
+            left: -285px;
+            top: 0px;
+            font-size: 32px;
+        }
+
+    .main_left1_timezone {
+        position: absolute;
+        top: 84px;
+        left: 45px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .modal_validip {
+        float: right;
+        width: 200px;
+        position: absolute;
+        right: -45px;
+        bottom: 65px;
+    }
+
+        section.hero .container .weather_animated .modal_validip span {
+            display: block;
+            margin-bottom: 2px;
+            font-size: 13px;
+        }
+
+    section.hero .container .weather_animated .main_right .validip_temp {
+        position: absolute;
+        left: -300px;
+        top: 15px;
+        font-size: 32px;
+    }
+}
+
+
+section.hero {
+    background: url(https://weatherstack.com/site_images/mountains.svg),linear-gradient(135deg,#1f4e69 0,#164058 100%);
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    background-repeat: no-repeat;
+    height: 100%;
+    /*padding: unset;*/
+}
+
+    section.hero .container .weather_animated .main_left img {
+        max-width: 10%;
+        height: auto;
+        position: absolute;
+        top: 78px;
+        left: 62px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .main_left1 img {
+        max-width: 10%;
+        height: auto;
+        position: absolute;
+        top: 78px;
+        left: 62px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated i {
+        position: absolute;
+    }
+
+i {
+    float: left;
+}
+
+i {
+    font-style: italic;
+}
+
+section.hero .container .weather_animated .location {
+    display: block;
+    height: 40px;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 35px;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+section.hero .container .weather_animated .location1 {
+    display: block;
+    height: 40px;
+    text-align: center;
+    padding-bottom: 305px;
+    padding-bottom: 180px;
+    font-weight: bold;
+}
+
+section.hero .container .weather_animated .main_left {
+    float: left;
+    width: 275px;
+    height: 137px;
+}
+
+section.hero .container .weather_animated .main_left1 {
+    float: left;
+    /*width: 275px;*/
+    height: 17px;
+    width: auto;
+    text-align: left;
+    padding: 10px;
+}
+
+section.hero .container .weather_animated .main_right {
+    float: right;
+    /* width: 215px; */
+    height: 137px;
+    padding-top: 15px;
+    position: absolute;
+    right: 37px;
+    left: unset;
+}
+
+section.hero .container .weather_animated .main_right1 {
+    float: right;
+    /* width: 215px; */
+    position: absolute;
+    right: 25px;
+    bottom: 50px;
+}
+
+section.hero .container .weather_animated .main_right .temperature {
+    position: absolute;
+    left: -140px;
+    top: 25px;
+    font-size: 32px;
+}
+
+section.hero .container .weather_animated .main_right .temperature1 {
+    position: absolute;
+    left: -215px;
+    top: 18px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+section.hero .container .weather_animated .main_right #LOC {
+    position: absolute;
+    left: -167px;
+    top: 90px;
+    font-size: small;
+    background-color: #16394c;
+}
+
+section.hero .container .weather_animated .main_right span {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 13px;
+}
+
+section.hero .container .weather_animated .main_right1 span {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 13px;
+}
+
+section.hero .container .weather_animated .main_left span {
+    position: absolute;
+    top: 140px;
+    left: 40px;
+    font-weight: bold;
+    width: 100px;
+    text-align: center;
+}
+
+section.hero .container .weather_animated .main_left1 span {
+    position: absolute;
+    top: 130px;
+    left: 40px;
+    font-weight: bold;
+    width: 100px;
+    text-align: center;
+}
+
+.leftside, .rightside {
+    height: 50vh;
+    width: 100%;
+}
+
+@media screen and (min-width:768px) {
+    .leftside, .rightside {
+        height: 100vh;
+    }
+}
+
+.leftside {
+    background: wheat;
+}
+
+.rightside {
+    background: cornsilk;
+}
+
+#getWeather {
+    color: black;
+    font-size: xx-large;
+}
+
+#getStatus {
+    color: black;
+    font-size: xx-large;
+}
+
+#error {
+    color: black;
+    font-size: xxx-large;
+    background: antiquewhite;
+}
+
+.errorpage {
+    height: 100vh;
+    width: 100%;
+    padding-left: 220px;
+    padding-top: 220px;
+}
+
+@media screen and (max-device-width: 640px) {
+    #weather_div {
+        height: 280px;
+        width: 470px;
+        position: absolute;
+        border-radius: 10px;
+        right: -48px;
+        top: 125px;
+        border: 4px solid #608094;
+        background: #16394c;
+    }    
+
+    #modal-mobile {
+        position: absolute;
+        left: -182px;
+        top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    section.hero .container .weather_animated .modal_validip #modal-mobile-2 {
+        position: absolute;
+        left: -182px;
+        top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }   
+
+    #modal-mobile-div {
+        float: right;
+        position: absolute;
+        right: 35px;
+        bottom: 45px;
+    }
+
+    #modal-mobile-div-2 {
+        float: right;
+        position: absolute;
+        right: 50px;
+        bottom: 65px;
+    }
+
+    section.hero .container .weather_animated .main_left1_timezone {
+        position: absolute;
+        top: 86px;
+        left: -10px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    #myModalLabel {
+        text-align: center;
+    }
+}
+
+.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+    background: antiquewhite;
+}
+
+
+span#modaladdressdetails {
+    font-size: x-large;
+}
+
+span.Maxtemp {
+    font-weight: bold;
+}
+
+span.Mintemp {
+    font-weight: bold;
+}
+
+/*section.hero .container .weather_animated .modal_validip #modal-mobile-2 {
+        position: absolute;
+        left: -285px;
+        top: 0px;
+        font-size: 32px;
+    }*/
+
+/*section.hero .container .weather_animated .modal_validip span {
+        display: block;
+        margin-bottom: 2px;
+        font-size: 13px;
+    }*/
+
+.modal-body_validip {
+    position: relative;
+    padding: 15px;
+}
+
+#closebutton_footer {
+    color: white;
+}

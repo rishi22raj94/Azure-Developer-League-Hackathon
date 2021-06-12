@@ -1,0 +1,38 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "restored": true,
+      "restoreTime": "2021-05-23T15:21:47.4322769Z"
+    },
+    "secrets2": {
+      "restored": true,
+      "restoreTime": "2021-05-23T15:21:25.2428933Z"
+    },
+    "appInsights1": {
+      "restored": true,
+      "restoreTime": "2021-05-23T15:21:27.7963648Z"
+    }
+  },
+  "parameters": {
+    "appInsights1.subscriptionId": {
+      "Name": "appInsights1.subscriptionId",
+      "Type": "subscription",
+      "Value": "c4c3938b-d983-47ff-8872-72d221ab6379"
+    },
+    "appInsights1.resourceGroupName": {
+      "Name": "appInsights1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "First-App"
+    },
+    "secrets1.resourceGroupName": {
+      "Name": "secrets1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "First-App"
+    },
+    "secrets1.subscriptionId": {
+      "Name": "secrets1.subscriptionId",
+      "Type": "subscription",
+      "Value": "c4c3938b-d983-47ff-8872-72d221ab6379"
+    }
+  }
+}

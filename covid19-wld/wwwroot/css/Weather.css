@@ -1,0 +1,1332 @@
+﻿@media screen and (min-width: 1024px) {
+    section.hero .container .weather_animated {
+        height: 280px;
+        width: 500px;
+        position: absolute;
+        border-radius: 10px;
+        right: 365px;
+        top: 125px;
+        border: 4px solid #608094;
+        background: #16394c;
+    }
+
+        section.hero .container .weather_animated .modal_validip #modal-mobile-2 {
+            position: absolute;
+            left: -285px;
+            top: 0px;
+            font-size: 32px;
+        }
+
+    .main_left1_timezone {
+        position: absolute;
+        top: 84px;
+        left: 45px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .modal_validip {
+        float: right;
+        width: 200px;
+        position: absolute;
+        right: -45px;
+        bottom: 65px;
+    }
+
+        section.hero .container .weather_animated .modal_validip span {
+            display: block;
+            margin-bottom: 2px;
+            font-size: 13px;
+        }
+
+    section.hero .container .weather_animated .main_right .validip_temp {
+        position: absolute;
+        left: -300px;
+        top: 15px;
+        font-size: 32px;
+    }
+}
+
+
+section.hero {
+    background: url(https://weatherstack.com/site_images/mountains.svg),linear-gradient(135deg,#1f4e69 0,#164058 100%);
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    background-repeat: no-repeat;
+    height: 100%;
+    /*padding: unset;*/
+}
+
+    section.hero .container .weather_animated .main_left img {
+        max-width: 10%;
+        height: auto;
+        position: absolute;
+        top: 78px;
+        left: 62px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .main_left1 img {
+        max-width: 10%;
+        height: auto;
+        position: absolute;
+        top: 78px;
+        left: 62px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated i {
+        position: absolute;
+    }
+
+i {
+    float: left;
+}
+
+i {
+    font-style: italic;
+}
+
+section.hero .container .weather_animated .location {
+    display: block;
+    height: 40px;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 35px;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+section.hero .container .weather_animated .location1 {
+    display: block;
+    height: 40px;
+    text-align: center;
+    padding-bottom: 305px;
+    padding-bottom: 180px;
+    font-weight: bold;
+}
+
+section.hero .container .weather_animated .main_left {
+    float: left;
+    width: 275px;
+    height: 137px;
+}
+
+section.hero .container .weather_animated .main_left1 {
+    float: left;
+    /*width: 275px;*/
+    height: 17px;
+    width: auto;
+    text-align: left;
+    padding: 10px;
+}
+
+section.hero .container .weather_animated .main_right {
+    float: right;
+    /* width: 215px; */
+    height: 137px;
+    padding-top: 15px;
+    position: absolute;
+    right: 37px;
+    left: unset;
+}
+
+section.hero .container .weather_animated .main_right1 {
+    float: right;
+    /* width: 215px; */
+    position: absolute;
+    right: 25px;
+    bottom: 50px;
+}
+
+section.hero .container .weather_animated .main_right .temperature {
+    position: absolute;
+    left: -140px;
+    top: 25px;
+    font-size: 32px;
+}
+
+section.hero .container .weather_animated .main_right .temperature1 {
+    position: absolute;
+    left: -220px;
+    top: 18px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+section.hero .container .weather_animated .main_right #LOC {
+    position: absolute;
+    left: -167px;
+    top: 90px;
+    font-size: small;
+    background-color: #16394c;
+}
+
+section.hero .container .weather_animated .main_right span {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 13px;
+}
+
+section.hero .container .weather_animated .main_right1 span {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 13px;
+}
+
+section.hero .container .weather_animated .main_left span {
+    position: absolute;
+    top: 140px;
+    left: 40px;
+    font-weight: bold;
+    width: 100px;
+    text-align: center;
+}
+
+section.hero .container .weather_animated .main_left1 span {
+    position: absolute;
+    top: 130px;
+    left: 40px;
+    font-weight: bold;
+    width: 100px;
+    text-align: center;
+}
+
+.leftside, .rightside {
+    height: 50vh;
+    width: 100%;
+}
+
+@media screen and (max-device-width: 640px) {
+    #weather_div {
+        height: 280px;
+        width: 470px;
+        position: absolute;
+        border-radius: 10px;
+        right: -48px;
+        top: 125px;
+        border: 4px solid #608094;
+        background: #16394c;
+    }
+
+    #modal-mobile {
+        position: absolute;
+        left: -182px;
+        top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    section.hero .container .weather_animated .modal_validip #modal-mobile-2 {
+        position: absolute;
+        left: -182px;
+        top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    #modal-mobile-div {
+        float: right;
+        position: absolute;
+        right: 35px;
+        bottom: 45px;
+    }
+
+    #modal-mobile-div-2 {
+        float: right;
+        position: absolute;
+        right: 50px;
+        bottom: 65px;
+    }
+
+    section.hero .container .weather_animated .main_left1_timezone {
+        position: absolute;
+        top: 86px;
+        left: -10px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    #myModalLabel {
+        text-align: center;
+    }
+}
+
+@media only screen and (device-width:768px) and (device-height: 1024px) {
+    #weather_div {
+        height: 280px;
+        width: 470px;
+        position: absolute;
+        border-radius: 10px;
+        left: 120px;
+        top: 125px;
+        border: 4px solid #608094;
+        background: #16394c;
+    }
+
+    section.hero .container .weather_animated .main_right .temperature {
+        position: absolute;
+        left: -160px;
+        top: 25px;
+        font-size: 32px;
+    }
+
+    section.hero .container .weather_animated .main_right #LOC {
+        position: absolute;
+        left: -170px;
+        top: 90px;
+        font-size: xx-small;
+        background-color: #16394c;
+    }
+
+    section.hero .container .weather_animated .main_left img {
+        max-width: 10%;
+        height: auto;
+        position: absolute;
+        top: 78px;
+        left: 32px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .main_left span {
+        position: absolute;
+        top: 140px;
+        left: 10px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .main_right {
+        float: right;
+        height: 137px;
+        padding-top: 25px;
+        position: absolute;
+        right: 7px;
+        left: unset;
+    }
+
+    #modal-mobile {
+        position: absolute;
+        left: -182px;
+        top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    section.hero .container .weather_animated .modal_validip #modal-mobile-2 {
+        position: absolute;
+        left: -182px;
+        top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    #modal-mobile-div {
+        float: right;
+        position: absolute;
+        right: 35px;
+        bottom: 45px;
+    }
+
+    #modal-mobile-div-2 {
+        float: right;
+        position: absolute;
+        right: 50px;
+        bottom: 65px;
+    }
+
+    section.hero .container .weather_animated .main_left1_timezone {
+        position: absolute;
+        top: 86px;
+        left: -10px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    #myModalLabel {
+        text-align: center;
+    }
+}
+
+@media only screen and (device-width: 540px) and (device-height: 720px) {
+    #weather_div {
+        height: 250px;
+        width: 400px;
+        position: absolute;
+        border-radius: 10px;
+        left: 68px;
+        top: 125px;
+        border: 4px solid #608094;
+        background: #16394c;
+    }
+    section.hero .container .weather_animated .main_right #LOC {
+        position: absolute;
+        left: -110px;
+        top: 90px;
+        font-size: xx-small;
+        background-color: #16394c;
+    }
+
+    section.hero .container .weather_animated .main_right .temperature {
+        position: absolute;
+        left: -95px;
+        top: 25px;
+        font-size: 32px;
+    }
+
+    section.hero .container .weather_animated .main_left span {
+        position: absolute;
+        top: 140px;
+        left: 20px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }   
+
+    section.hero .container .weather_animated .main_left img {
+        max-width: 10%;
+        height: auto;
+        position: absolute;
+        top: 78px;
+        left: 52px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+}
+
+@media only screen and (device-width: 280px) and (device-height: 653px) {
+    #weather_div {
+        height: 250px;
+        width: 300px;
+        position: absolute;
+        border-radius: 10px;
+        right: 0px;
+        top: 125px;
+        border: 4px solid #608094;
+        background: #16394c;
+    }
+
+    section.hero .container .weather_animated .main_right1 {
+        float: right;        
+        position: absolute;
+        right: 25px;
+        bottom: 30px;
+    }
+
+    section.hero .container .weather_animated .main_left1 img {
+        top: 100px;  
+    }
+
+    section.hero .container .weather_animated .main_left1 span {
+        position: absolute;
+        top: 150px;
+        left: 25px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .main_right .temperature1 {
+        position: absolute;
+        left: -100px;
+        top: 34px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    section.hero .container .weather_animated .main_right {
+        float: right;
+        padding-top: 45px;
+        position: absolute;
+        right: 0px;
+        left: unset;
+    }
+
+    section.hero .container .weather_animated .main_left span {
+        position: absolute;
+        top: 200px;
+        left: 20px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .main_right #LOC {
+        position: absolute;
+        left: -160px;
+        top: 110px;
+        font-size: xx-small;
+        background-color: #16394c;
+    }
+
+    section.hero .container .weather_animated .main_right .temperature {
+        position: absolute;
+        left: -145px;
+        top: 65px;
+        font-size: 25px;
+    }
+
+    #modal-mobile {
+        position: absolute;
+        left: -100px;
+        top: 50px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+}
+
+@media only screen and (device-width: 360px) and (device-height: 640px) {
+    #weather_div {
+        height: 280px;
+        width: 360px;
+        position: absolute;
+        border-radius: 10px;
+        right: 0px;
+        top: 125px;
+        border: 4px solid #608094;
+        background: #16394c;
+    }
+
+    section.hero .container .weather_animated .main_right {
+        float: right;
+        padding-top: 25px;
+        position: absolute;
+        right: 2px;
+        left: unset;
+    }
+
+        section.hero .container .weather_animated .main_right .temperature {
+            position: absolute;
+            left: -100px;
+            top: 25px;
+            font-size: 32px;
+        }
+
+        section.hero .container .weather_animated .main_right #LOC {
+            position: absolute;
+            left: -115px;
+            top: 90px;
+            font-size: xx-small;
+            background-color: #16394c;
+        }
+
+    section.hero .container .weather_animated .main_left img {
+        max-width: 10%;
+        height: auto;
+        position: absolute;
+        top: 78px;
+        left: 42px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .main_left span {
+        position: absolute;
+        top: 140px;
+        left: 12px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    #modal-mobile {
+        position: absolute;
+        left: -175px;
+        top: 25px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    section.hero .container .weather_animated .modal_validip #modal-mobile-2 {
+        position: absolute;
+        left: -182px;
+        top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    #modal-mobile-div {
+        float: right;
+        position: absolute;
+        right: 35px;
+        bottom: 45px;
+    }
+
+    #modal-mobile-div-2 {
+        float: right;
+        position: absolute;
+        right: 50px;
+        bottom: 65px;
+    }
+
+    section.hero .container .weather_animated .main_left1_timezone {
+        position: absolute;
+        top: 86px;
+        left: -10px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    #myModalLabel {
+        text-align: center;
+    }
+}
+
+@media only screen and (device-width: 411px) and (device-height: 731px) {
+    #weather_div {
+        height: 280px;
+        width: 390px;
+        position: absolute;
+        border-radius: 10px;
+        right: 0px;
+        left: 10px;
+        top: 125px;
+        border: 4px solid #608094;
+        background: #16394c;
+    }
+
+    section.hero .container .weather_animated .main_right .temperature {
+        position: absolute;
+        left: -120px;
+        top: 25px;
+        font-size: 32px;
+    }
+
+    section.hero .container .weather_animated .main_right #LOC {
+        position: absolute;
+        left: -130px;
+        top: 90px;
+        font-size: xx-small;
+        background-color: #16394c;
+    }
+
+    section.hero .container .weather_animated .main_left span {
+        position: absolute;
+        top: 140px;
+        left: 10px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .main_right {
+        float: right;       
+        height: 137px;
+        padding-top: 25px;
+        position: absolute;
+        right: 7px;
+        left: unset;
+    }
+
+    section.hero .container .weather_animated .main_left img {
+        max-width: 10%;
+        height: auto;
+        position: absolute;
+        top: 78px;
+        left: 42px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    #modal-mobile {
+        position: absolute;
+        left: -192px;
+        top: 30px;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    section.hero .container .weather_animated .modal_validip #modal-mobile-2 {
+        position: absolute;
+        left: -182px;
+        top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    #modal-mobile-div {
+        float: right;
+        position: absolute;
+        right: 35px;
+        bottom: 45px;
+    }
+
+    #modal-mobile-div-2 {
+        float: right;
+        position: absolute;
+        right: 50px;
+        bottom: 65px;
+    }
+
+    section.hero .container .weather_animated .main_left1_timezone {
+        position: absolute;
+        top: 86px;
+        left: -10px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    #myModalLabel {
+        text-align: center;
+    }
+}
+
+@media only screen and (device-width: 411px) and (device-height: 823px) {
+    #weather_div {
+        height: 280px;
+        width: 390px;
+        position: absolute;
+        border-radius: 10px;
+        right: 0px;
+        left: 10px;
+        top: 125px;
+        border: 4px solid #608094;
+        background: #16394c;
+    }
+
+    section.hero .container .weather_animated .main_right .temperature {
+        position: absolute;
+        left: -115px;
+        top: 25px;
+        font-size: 32px;
+    }
+
+    section.hero .container .weather_animated .main_right #LOC {
+        position: absolute;
+        left: -125px;
+        top: 90px;
+        font-size: xx-small;
+        background-color: #16394c;
+    }
+
+    section.hero .container .weather_animated .main_left img {
+        max-width: 10%;
+        height: auto;
+        position: absolute;
+        top: 78px;
+        left: 42px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .main_left span {
+        position: absolute;
+        top: 140px;
+        left: 10px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .main_right {
+        float: right;        
+        height: 137px;
+        padding-top: 25px;
+        position: absolute;
+        right: 7px;
+        left: unset;
+    }
+
+    #modal-mobile {
+        position: absolute;
+        left: -222px;
+        top: 28px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    section.hero .container .weather_animated .modal_validip #modal-mobile-2 {
+        position: absolute;
+        left: -182px;
+        top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    #modal-mobile-div {
+        float: right;
+        position: absolute;
+        right: 35px;
+        bottom: 45px;
+    }
+
+    #modal-mobile-div-2 {
+        float: right;
+        position: absolute;
+        right: 50px;
+        bottom: 65px;
+    }
+
+    section.hero .container .weather_animated .main_left1_timezone {
+        position: absolute;
+        top: 86px;
+        left: -10px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    #myModalLabel {
+        text-align: center;
+    }
+}
+
+@media only screen and (device-width: 414px) and (device-height: 736px) {
+    #weather_div {
+        height: 280px;
+        width: 390px;
+        position: absolute;
+        border-radius: 10px;
+        right: 0px;
+        left: 10px;
+        top: 125px;
+        border: 4px solid #608094;
+        background: #16394c;
+    }
+
+    section.hero .container .weather_animated .main_right .temperature {
+        position: absolute;
+        left: -110px;
+        top: 25px;
+        font-size: 32px;
+    }
+
+    section.hero .container .weather_animated .main_right #LOC {
+        position: absolute;
+        left: -120px;
+        top: 90px;
+        font-size: xx-small;
+        background-color: #16394c;
+    }
+
+    section.hero .container .weather_animated .main_left img {
+        max-width: 10%;
+        height: auto;
+        position: absolute;
+        top: 78px;
+        left: 32px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .main_left span {
+        position: absolute;
+        top: 140px;
+        left: 20px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .main_right {
+        float: right;       
+        height: 137px;
+        padding-top: 25px;
+        position: absolute;
+        right: 7px;
+        left: unset;
+    }
+
+    #modal-mobile {
+        position: absolute;
+        left: -222px;
+        top: 28px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    section.hero .container .weather_animated .modal_validip #modal-mobile-2 {
+        position: absolute;
+        left: -182px;
+        top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    #modal-mobile-div {
+        float: right;
+        position: absolute;
+        right: 35px;
+        bottom: 45px;
+    }
+
+    #modal-mobile-div-2 {
+        float: right;
+        position: absolute;
+        right: 50px;
+        bottom: 65px;
+    }
+
+    section.hero .container .weather_animated .main_left1_timezone {
+        position: absolute;
+        top: 86px;
+        left: -10px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    #myModalLabel {
+        text-align: center;
+    }
+}
+
+@media only screen and (device-width: 375px) and (device-height: 812px) {
+    #weather_div {
+        height: 280px;
+        width: 360px;
+        position: absolute;
+        border-radius: 10px;
+        right: 0px;
+        left: 10px;
+        top: 125px;
+        border: 4px solid #608094;
+        background: #16394c;
+    }
+
+    section.hero .container .weather_animated .main_right .temperature {
+        position: absolute;
+        left: -90px;
+        top: 25px;
+        font-size: 32px;
+    }
+
+    section.hero .container .weather_animated .main_right #LOC {
+        position: absolute;
+        left: -105px;
+        top: 90px;
+        font-size: xx-small;
+        background-color: #16394c;
+    }    
+
+    section.hero .container .weather_animated .main_left img {
+        max-width: 10%;
+        height: auto;
+        position: absolute;
+        top: 78px;
+        left: 32px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .main_left span {
+        position: absolute;
+        top: 140px;
+        left: 10px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .main_right {
+        float: right;
+        height: 137px;
+        padding-top: 25px;
+        position: absolute;
+        right: 7px;
+        left: unset;
+    }
+
+    #modal-mobile {
+        position: absolute;
+        left: -182px;
+        top: 26px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    section.hero .container .weather_animated .modal_validip #modal-mobile-2 {
+        position: absolute;
+        left: -182px;
+        top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    #modal-mobile-div {
+        float: right;
+        position: absolute;
+        right: 35px;
+        bottom: 45px;
+    }
+
+    #modal-mobile-div-2 {
+        float: right;
+        position: absolute;
+        right: 50px;
+        bottom: 65px;
+    }
+
+    section.hero .container .weather_animated .main_left1_timezone {
+        position: absolute;
+        top: 86px;
+        left: -10px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    #myModalLabel {
+        text-align: center;
+    }
+}
+
+/* #### iPhone 4+ Portrait or Landscape #### */
+@media only screen and (device-width: 320px) {
+    #weather_div {
+        height: 280px;
+        width: 470px;
+        position: absolute;
+        border-radius: 10px;
+        right: -48px;
+        top: 125px;
+        border: 4px solid #608094;
+        background: #16394c;
+    }
+
+    #modal-mobile {
+        position: absolute;
+        left: -182px;
+        top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    section.hero .container .weather_animated .modal_validip #modal-mobile-2 {
+        position: absolute;
+        left: -182px;
+        top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    #modal-mobile-div {
+        float: right;
+        position: absolute;
+        right: 35px;
+        bottom: 45px;
+    }
+
+    #modal-mobile-div-2 {
+        float: right;
+        position: absolute;
+        right: 50px;
+        bottom: 65px;
+    }
+
+    section.hero .container .weather_animated .main_left1_timezone {
+        position: absolute;
+        top: 86px;
+        left: -10px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    #myModalLabel {
+        text-align: center;
+    }
+}
+
+/* #### iPhone 5 Portrait or Landscape #### */
+@media only screen and (device-height: 568px) and (device-width: 320px) {
+    #weather_div {
+        height: 240px;
+        width: 350px;
+        position: absolute;
+        border-radius: 10px;
+        right: 0px;
+        top: 125px;
+        border: 4px solid #608094;
+        background: #16394c;
+    }
+
+    #modal-mobile {
+        position: absolute;
+        left: -120px;
+        top: 28px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    section.hero .container .weather_animated .modal_validip #modal-mobile-2 {
+        position: absolute;
+        left: -182px;
+        top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    #modal-mobile-div {
+        float: right;
+        position: absolute;
+        right: 35px;
+        bottom: 45px;
+    }
+
+    #modal-mobile-div-2 {
+        float: right;
+        position: absolute;
+        right: 50px;
+        bottom: 65px;
+    }
+
+    section.hero .container .weather_animated .main_left1_timezone {
+        position: absolute;
+        top: 86px;
+        left: -10px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    #myModalLabel {
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .main_left span {
+        position: absolute;
+        top: 130px;
+        left: 30px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .main_right {
+        float: right;
+        width: auto;
+        height: 137px;
+        padding-top: 15px;
+        position: absolute;
+        right: 0px;
+        left: unset;
+    }
+
+        section.hero .container .weather_animated .main_right .temperature {
+            position: absolute;
+            left: -85px;
+            top: 25px;
+            font-size: 32px;
+        }
+
+        section.hero .container .weather_animated .main_right #LOC {
+            position: absolute;
+            left: -100px;
+            top: 80px;
+            font-size: xx-small;
+            background-color: #16394c;
+        }
+
+    section.hero .container .weather_animated .location {
+        display: block;
+        height: 40px;
+        text-align: center;
+        padding-top: 15px;
+        padding-bottom: 35px;
+        font-weight: bold;
+        font-size: larger;
+    }
+}
+
+/* #### iPhone 6 and 6 plus Portrait or Landscape #### */
+@media only screen and (device-height: 667px) and (device-width: 375px) {
+    #weather_div {
+        height: 240px;
+        width: 350px;
+        position: absolute;
+        border-radius: 10px;
+        right: 0px;
+        left: 12px;
+        top: 125px;
+        border: 4px solid #608094;
+        background: #16394c;
+    }
+
+    section.hero .container .weather_animated .location {
+        display: block;
+        height: 40px;
+        text-align: center;
+        padding-top: 15px;
+        padding-bottom: 35px;
+        font-weight: bold;
+        font-size: larger;
+    }
+
+    section.hero .container .weather_animated .main_left img {
+        max-width: 10%;
+        height: auto;
+        position: absolute;
+        top: 78px;
+        left: 42px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .main_left span {
+        position: absolute;
+        top: 130px;
+        left: 10px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    section.hero .container .weather_animated .main_right {
+        float: right;
+        width: auto;
+        height: 137px;
+        padding-top: 15px;
+        position: absolute;
+        right: 10px;
+        left: unset;
+    }
+
+        section.hero .container .weather_animated .main_right .temperature {
+            position: absolute;
+            left: -90px;
+            top: 25px;
+            font-size: 32px;
+        }
+
+        section.hero .container .weather_animated .main_right #LOC {
+            position: absolute;
+            left: -105px;
+            top: 80px;
+            font-size: xx-small;
+            background-color: #16394c;
+        }
+
+    #modal-mobile {
+        position: absolute;
+        left: -192px;
+        top: 26px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    section.hero .container .weather_animated .modal_validip #modal-mobile-2 {
+        position: absolute;
+        left: -182px;
+        top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    #modal-mobile-div {
+        float: right;
+        position: absolute;
+        right: 35px;
+        bottom: 45px;
+    }
+
+    #modal-mobile-div-2 {
+        float: right;
+        position: absolute;
+        right: 50px;
+        bottom: 65px;
+    }
+
+    section.hero .container .weather_animated .main_left1_timezone {
+        position: absolute;
+        top: 86px;
+        left: -10px;
+        font-weight: bold;
+        width: 100px;
+        text-align: center;
+    }
+
+    #myModalLabel {
+        text-align: center;
+    }
+}
+
+
+.leftside {
+    background: wheat;
+}
+
+    .rightside {
+        background: cornsilk;
+    }
+
+    #getWeather {
+        color: black;
+        font-size: xx-large;
+    }
+
+    #getStatus {
+        color: black;
+        font-size: xx-large;
+    }
+
+    #error {
+        color: black;
+        font-size: xxx-large;
+        background: antiquewhite;
+    }
+
+    .errorpage {
+        height: 100vh;
+        width: 100%;
+        padding-left: 220px;
+        padding-top: 220px;
+    }
+
+    .errorpageforindex {
+        height: 100vh;
+        width: 100%;
+        padding-left: 275px;
+        padding-top: 155px;
+    }    
+
+    .no-gutters {
+        margin-right: 0;
+        margin-left: 0;
+        background: antiquewhite;
+    }
+
+    span#modaladdressdetails {
+        font-size: x-large;
+    }
+
+    span.Maxtemp {
+        font-weight: bold;
+    }
+
+    span.Mintemp {
+        font-weight: bold;
+    }    
+
+    .modal-body_validip {
+        position: relative;
+        padding: 15px;
+    }
+
+    #closebutton_footer {
+        color: white;
+    }
+
+    #mapsbutton_footer {
+        color: white;
+    }

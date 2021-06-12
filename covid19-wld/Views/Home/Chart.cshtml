@@ -1,0 +1,690 @@
+﻿@model covid19_wld.Model.ViewModelCovid
+
+<div class="container">
+    <canvas id="myChartConfirmed" style="min-height: 375px;"></canvas>
+</div>
+<br />
+<div class="container">
+    <canvas id="myChartRecovered" style="min-height: 375px;"></canvas>
+</div>
+<br />
+<div class="container">
+    <canvas id="myChartDeaths" style="min-height: 375px;"></canvas>
+</div>
+<br />
+<div class="container">
+    <canvas id="myChartVaccinated" style="min-height: 375px;"></canvas>
+</div>
+<br />
+<div class="container">
+    <canvas id="myChartTested" style="min-height: 475px;"></canvas>
+</div>
+<br />
+<script>
+    let myChartTested = document.getElementById('myChartTested').getContext('2d');
+    let myChartConfirmed = document.getElementById('myChartConfirmed').getContext('2d');
+    let myChartRecovered = document.getElementById('myChartRecovered').getContext('2d');
+    let myChartDeaths = document.getElementById('myChartDeaths').getContext('2d');
+    let myChartVaccinated = document.getElementById('myChartVaccinated').getContext('2d');
+
+    var numbers = @Html.Raw(Json.Serialize(Model.chart.tested));
+    var Confirmed = @Html.Raw(Json.Serialize(Model.chart.confirmed));
+    var Deceased = @Html.Raw(Json.Serialize(Model.chart.deceased));
+    var Vaccinated = @Html.Raw(Json.Serialize(Model.chart.vaccinated));
+    var Recovered = @Html.Raw(Json.Serialize(Model.chart.recovered));
+    var dates_data = @Html.Raw(Json.Serialize(Model.chart.dates));
+    var dates_tested = @Html.Raw(Json.Serialize(Model.chart.tested_dates));
+
+    Chart.defaults.global.defaultFontFamily = 'Lato';
+    Chart.defaults.global.defaultFontSize = 18;
+    Chart.defaults.global.defaultFontColor = '#000000';
+
+    var tooltipsLabelForTested = ['Tested', 'Tested', 'Tested', 'Tested', 'Tested', 'Tested', 'Tested'];
+    var tooltipsLabelForDeaths = ['Deaths', 'Deaths', 'Deaths', 'Deaths', 'Deaths', 'Deaths', 'Deaths'];
+    var tooltipsLabelForConfirmed = ['Confirmed', 'Confirmed', 'Confirmed', 'Confirmed', 'Confirmed', 'Confirmed', 'Confirmed'];
+    var tooltipsLabelForRecovered = ['Recovered', 'Recovered', 'Recovered', 'Recovered', 'Recovered', 'Recovered', 'Recovered'];
+    var tooltipsLabelForVaccinated = ['Vaccinated', 'Vaccinated', 'Vaccinated', 'Vaccinated', 'Vaccinated', 'Vaccinated', 'Vaccinated'];
+
+    let massPopConfirmed = new Chart(myChartConfirmed, {
+        type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+        data: {
+            labels: [dates_data[0], dates_data[1], dates_data[2], dates_data[3], dates_data[4], dates_data[5], dates_data[6]],
+            datasets: [{
+                label: 'Confirmed',
+                data: [{
+                    x: dates_data[0],
+                    y: Confirmed[0]
+                },
+                {
+                    x: dates_data[1],
+                    y: Confirmed[1]
+                },
+                {
+                    x: dates_data[2],
+                    y: Confirmed[2]
+                },
+                {
+                    x: dates_data[3],
+                    y: Confirmed[3]
+                },
+                {
+                    x: dates_data[4],
+                    y: Confirmed[4]
+                },
+                {
+                    x: dates_data[5],
+                    y: Confirmed[5]
+                },
+                {
+                    x: dates_data[6],
+                    y: Confirmed[6]
+                }],
+                backgroundColor: [
+                    'rgba(0,102,255,0.6)',
+                    'rgba(0,102,255,0.6)',
+                    'rgba(0,102,255,0.6)',
+                    'rgba(0,102,255,0.6)',
+                    'rgba(0,102,255,0.6)',
+                    'rgba(0,102,255,0.6)',
+                    'rgba(0,102,255,0.6)'
+                ],
+                borderWidth: 1,
+                borderColor: '#777',
+                hoverBorderWidth: 3,
+                hoverBorderColor: '#000'
+            }],
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        callback: function (value, index, values) {
+                            return FormatNumbers(value);
+                        }
+                    },
+                    display: true,
+                    position: "left",
+                    scaleLabel: {
+                        display: true,
+                        padding: 20,
+                        fontStyle: "bold",
+                        labelString: 'People'
+                    },
+                    gridLines: {
+                        display: true
+                    }
+                }],
+                xAxes: [{
+                    barPercentage: 0.4,
+                    scaleLabel: {
+                        display: true,
+                        padding: 20,
+                        fontStyle: "bold",
+                        labelString: '1 Week',
+                    }
+                }]
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: 'Covid-19 India',
+                fontSize: 25
+            },
+            legend: {
+                display: true,
+                position: 'top',
+                labels: {
+                    fontColor: '#000'
+                }
+            },
+            layout: {
+                padding: {
+                    left: 50,
+                    right: 0,
+                    bottom: 0,
+                    top: 0
+                }
+            },
+            tooltips: {
+                enabled: true,
+                mode: 'index',
+                intersect: true,
+                callbacks: {
+                    title: function (tooltipItem, data) {
+                        console.log(tooltipItem);
+                        return tooltipsLabelForConfirmed[tooltipItem[0].index];
+                    }
+                }
+            }
+        },
+        plugins: [{
+            beforeDraw: function (c) {
+                var chartHeight = c.chart.height;
+                c.scales['y-axis-0'].options.ticks.fontSize = chartHeight * 6 / 100; //fontSize: 6% of canvas height
+                c.scales['y-axis-0'].options.scaleLabel.fontSize = chartHeight * 6 / 100;
+                c.scales['x-axis-0'].options.scaleLabel.fontSize = chartHeight * 6 / 100;
+                c.scales['x-axis-0'].options.ticks.fontSize = chartHeight * 6 / 100;
+            }
+        }]
+    });
+    let massPopRecovered = new Chart(myChartRecovered, {
+        type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+        data: {
+            labels: [dates_data[0], dates_data[1], dates_data[2], dates_data[3], dates_data[4], dates_data[5], dates_data[6]],
+            datasets: [{
+                label: 'Recovered',
+                data: [{
+                    x: dates_data[0],
+                    y: Recovered[0]
+                },
+                {
+                    x: dates_data[1],
+                    y: Recovered[1]
+                },
+                {
+                    x: dates_data[2],
+                    y: Recovered[2]
+                },
+                {
+                    x: dates_data[3],
+                    y: Recovered[3]
+                },
+                {
+                    x: dates_data[4],
+                    y: Recovered[4]
+                },
+                {
+                    x: dates_data[5],
+                    y: Recovered[5]
+                },
+                {
+                    x: dates_data[6],
+                    y: Recovered[6]
+                }],
+                backgroundColor: [
+                    'rgba(51,153,51,0.6)',
+                    'rgba(51,153,51,0.6)',
+                    'rgba(51,153,51,0.6)',
+                    'rgba(51,153,51,0.6)',
+                    'rgba(51,153,51,0.6)',
+                    'rgba(51,153,51,0.6)',
+                    'rgba(51,153,51,0.6)',
+                ],
+                borderWidth: 1,
+                borderColor: '#777',
+                hoverBorderWidth: 3,
+                hoverBorderColor: '#000'
+            }],
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        callback: function (value, index, values) {
+                            return FormatNumbers(value);
+                        }
+                    },
+                    display: true,
+                    position: "left",
+                    scaleLabel: {
+                        display: true,
+                        padding: 20,
+                        fontStyle: "bold",
+                        labelString: 'People'
+                    },
+                    gridLines: {
+                        display: true
+                    }
+                }],
+                xAxes: [{
+                    barPercentage: 0.4,
+                    scaleLabel: {
+                        display: true,
+                        padding: 20,
+                        fontStyle: "bold",
+                        labelString: '1 Week',
+                    }
+                }]
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: 'Covid-19 India',
+                fontSize: 25
+            },
+            legend: {
+                display: true,
+                position: 'top',
+                labels: {
+                    fontColor: '#000'
+                }
+            },
+            layout: {
+                padding: {
+                    left: 50,
+                    right: 0,
+                    bottom: 0,
+                    top: 0
+                }
+            },
+            tooltips: {
+                enabled: true,
+                mode: 'index',
+                intersect: true,
+                callbacks: {
+                    title: function (tooltipItem, data) {
+                        console.log(tooltipItem);
+                        return tooltipsLabelForRecovered[tooltipItem[0].index];
+                    }
+                }
+            }
+        },
+        plugins: [{
+            beforeDraw: function (c) {
+                var chartHeight = c.chart.height;
+                c.scales['y-axis-0'].options.ticks.fontSize = chartHeight * 6 / 100; //fontSize: 6% of canvas height
+                c.scales['y-axis-0'].options.scaleLabel.fontSize = chartHeight * 6 / 100;
+                c.scales['x-axis-0'].options.scaleLabel.fontSize = chartHeight * 6 / 100;
+                c.scales['x-axis-0'].options.ticks.fontSize = chartHeight * 6 / 100;
+            }
+        }]
+    });
+    let massPopDeaths = new Chart(myChartDeaths, {
+        type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+        data: {
+            labels: [dates_data[0], dates_data[1], dates_data[2], dates_data[3], dates_data[4], dates_data[5], dates_data[6]],
+            datasets: [{
+                label: 'Deaths',
+                data: [{
+                    x: dates_data[0],
+                    y: Deceased[0]
+                },
+                {
+                    x: dates_data[1],
+                    y: Deceased[1]
+                },
+                {
+                    x: dates_data[2],
+                    y: Deceased[2]
+                },
+                {
+                    x: dates_data[3],
+                    y: Deceased[3]
+                },
+                {
+                    x: dates_data[4],
+                    y: Deceased[4]
+                },
+                {
+                    x: dates_data[5],
+                    y: Deceased[5]
+                },
+                {
+                    x: dates_data[6],
+                    y: Deceased[6]
+                }],
+                backgroundColor: [
+                    'rgba(255,0,0,0.6)',
+                    'rgba(255,0,0,0.6)',
+                    'rgba(255,0,0,0.6)',
+                    'rgba(255,0,0,0.6)',
+                    'rgba(255,0,0,0.6)',
+                    'rgba(255,0,0,0.6)',
+                    'rgba(255,0,0,0.6)',
+                ],
+                borderWidth: 1,
+                borderColor: '#777',
+                hoverBorderWidth: 3,
+                hoverBorderColor: '#000'
+            }],
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        callback: function (value, index, values) {
+                            return FormatNumbers(value);
+                        }
+                    },
+                    display: true,
+                    position: "left",
+                    scaleLabel: {
+                        display: true,
+                        fontStyle: "bold",
+                        padding: 20,
+                        labelString: 'People'
+                    },
+                    gridLines: {
+                        display: true
+                    }
+                }],
+                xAxes: [{
+                    barPercentage: 0.4,
+                    scaleLabel: {
+                        display: true,
+                        fontStyle: "bold",
+                        padding: 20,
+                        labelString: '1 Week',
+                    }
+                }]
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: 'Covid-19 India',
+                fontSize: 25
+            },
+            legend: {
+                display: true,
+                position: 'top',
+                labels: {
+                    fontColor: '#000'
+                }
+            },
+            layout: {
+                padding: {
+                    left: 50,
+                    right: 0,
+                    bottom: 0,
+                    top: 0
+                }
+            },
+            tooltips: {
+                enabled: true,
+                mode: 'index',
+                intersect: true,
+                callbacks: {
+                    title: function (tooltipItem, data) {
+                        console.log(tooltipItem);
+                        return tooltipsLabelForDeaths[tooltipItem[0].index];
+                    }
+                }
+            }
+        },
+        plugins: [{
+            beforeDraw: function (c) {
+                var chartHeight = c.chart.height;
+                c.scales['y-axis-0'].options.ticks.fontSize = chartHeight * 6 / 100; //fontSize: 6% of canvas height
+                c.scales['y-axis-0'].options.scaleLabel.fontSize = chartHeight * 6 / 100;
+                c.scales['x-axis-0'].options.scaleLabel.fontSize = chartHeight * 6 / 100;
+                c.scales['x-axis-0'].options.ticks.fontSize = chartHeight * 6 / 100;
+            }
+        }]
+    });
+    let massPopVaccinated = new Chart(myChartVaccinated, {
+        type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+        data: {
+            labels: [dates_tested[0], dates_tested[1], dates_tested[2], dates_tested[3], dates_tested[4], dates_tested[5], dates_tested[6]],
+            datasets: [{
+                label: 'Vaccinated',
+                data: [{
+                    x: dates_tested[0],
+                    y: Vaccinated[0]
+                },
+                {
+                    x: dates_tested[1],
+                    y: Vaccinated[1]
+                },
+                {
+                    x: dates_tested[2],
+                    y: Vaccinated[2]
+                },
+                {
+                    x: dates_tested[3],
+                    y: Vaccinated[3]
+                },
+                {
+                    x: dates_tested[4],
+                    y: Vaccinated[4]
+                },
+                {
+                    x: dates_tested[5],
+                    y: Vaccinated[5]
+                },
+                {
+                    x: dates_tested[6],
+                    y: Vaccinated[6]
+                }],
+                backgroundColor: [
+                    'rgba(255,0,255,0.6)',
+                    'rgba(255,0,255,0.6)',
+                    'rgba(255,0,255,0.6)',
+                    'rgba(255,0,255,0.6)',
+                    'rgba(255,0,255,0.6)',
+                    'rgba(255,0,255,0.6)',
+                    'rgba(255,0,255,0.6)',
+                ],
+                borderWidth: 1,
+                borderColor: '#777',
+                hoverBorderWidth: 3,
+                hoverBorderColor: '#000'
+            }],
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        callback: function (value, index, values) {
+                            return FormatNumbers(value);
+                        }
+                    },
+                    display: true,
+                    position: "left",
+                    scaleLabel: {
+                        display: true,
+                        padding: 20,
+                        fontStyle: "bold",
+                        labelString: 'People'
+                    },
+                    gridLines: {
+                        display: true
+                    }
+                }],
+                xAxes: [{
+                    barPercentage: 0.4,
+                    scaleLabel: {
+                        display: true,
+                        padding: 20,
+                        fontStyle: "bold",
+                        labelString: '1 Week',
+                    }
+                }]
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: 'Covid-19 India',
+                fontSize: 25
+            },
+            legend: {
+                display: true,
+                position: 'top',
+                labels: {
+                    fontColor: '#000'
+                }
+            },
+            layout: {
+                padding: {
+                    left: 50,
+                    right: 0,
+                    bottom: 0,
+                    top: 0
+                }
+            },
+            tooltips: {
+                enabled: true,
+                mode: 'index',
+                intersect: true,
+                callbacks: {
+                    title: function (tooltipItem, data) {
+                        console.log(tooltipItem);
+                        return tooltipsLabelForVaccinated[tooltipItem[0].index];
+                    }
+                }
+            }
+        },
+        plugins: [{
+            beforeDraw: function (c) {
+                var chartHeight = c.chart.height;
+                c.scales['y-axis-0'].options.ticks.fontSize = chartHeight * 6 / 100; //fontSize: 6% of canvas height
+                c.scales['y-axis-0'].options.scaleLabel.fontSize = chartHeight * 6 / 100;
+                c.scales['x-axis-0'].options.scaleLabel.fontSize = chartHeight * 6 / 100;
+                c.scales['x-axis-0'].options.ticks.fontSize = chartHeight * 6 / 100;
+            }
+        }]
+    });
+    let massPopTested = new Chart(myChartTested, {
+        type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+        data: {
+            labels: [dates_tested[0], dates_tested[1], dates_tested[2], dates_tested[3], dates_tested[4], dates_tested[5], dates_tested[6]],
+            datasets: [{
+                label: 'Tested',
+                data: [{
+                    x: dates_tested[0],
+                    y: numbers[0]
+                },
+                {
+                    x: dates_tested[1],
+                    y: numbers[1]
+                },
+                {
+                    x: dates_tested[2],
+                    y: numbers[2]
+                },
+                {
+                    x: dates_tested[3],
+                    y: numbers[3]
+                },
+                {
+                    x: dates_tested[4],
+                    y: numbers[4]
+                },
+                {
+                    x: dates_tested[5],
+                    y: numbers[5]
+                },
+                {
+                    x: dates_tested[6],
+                    y: numbers[6]
+                }],
+                backgroundColor: [
+                    'rgba(147, 112, 219, 0.6)',
+                    'rgba(147, 112, 219, 0.6)',
+                    'rgba(147, 112, 219, 0.6)',
+                    'rgba(147, 112, 219, 0.6)',
+                    'rgba(147, 112, 219, 0.6)',
+                    'rgba(147, 112, 219, 0.6)',
+                    'rgba(147, 112, 219, 0.6)',
+                ],
+                borderWidth: 1,
+                borderColor: '#777',
+                hoverBorderWidth: 3,
+                hoverBorderColor: '#000'
+            }],
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        callback: function (value, index, values) {
+                            return FormatNumbers(value);
+                        }
+                    },
+                    afterFit: function (scale) {
+                        scale.width = 125  //<-- set value as you wish
+                    },
+                    display: true,
+                    position: "left",
+                    scaleLabel: {
+                        display: true,
+                        padding: 10,
+                        fontStyle: "bold",
+                        labelString: 'People'
+                    },
+                    gridLines: {
+                        display: true
+                    }
+                }],
+                xAxes: [{
+                    barPercentage: 0.4,
+                    ticks: {
+                        autoskip: true,
+                        autoSkipPadding: 50,
+                    },
+                    afterFit: function (scale) {
+                        scale.width = 130  //<-- set value as you wish
+                    },
+                    scaleLabel: {
+                        display: true,
+                        padding: 20,
+                        fontStyle: "bold",
+                        labelString: '1 Week',
+                    }
+                }]
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: 'Covid-19 India',
+                fontSize: 25
+            },
+            legend: {
+                display: true,
+                position: 'top',
+                labels: {
+                    fontColor: '#000'
+                }
+            },
+            layout: {
+                padding: {
+                    left: 50,
+                    right: 0,
+                    bottom: 0,
+                    top: 0
+                }
+            },
+            tooltips: {
+                enabled: true,
+                mode: 'index',
+                intersect: true,
+                callbacks: {
+                    title: function (tooltipItem, data) {
+                        console.log(tooltipItem);
+                        return tooltipsLabelForTested[tooltipItem[0].index];
+                    }
+                }
+            }
+        },
+        plugins: [{
+            beforeDraw: function (c) {
+                var chartHeight = c.chart.height;
+                c.scales['y-axis-0'].options.ticks.fontSize = chartHeight * 6 / 100; //fontSize: 6% of canvas height
+                c.scales['y-axis-0'].options.scaleLabel.fontSize = chartHeight * 6 / 100;
+                c.scales['x-axis-0'].options.scaleLabel.fontSize = chartHeight * 6 / 100;
+                c.scales['x-axis-0'].options.ticks.fontSize = chartHeight * 6 / 100;
+            }
+        }]
+    });
+
+    function FormatNumbers(value) {
+        var intial = parseInt(Math.max(0, Math.log10(value) - 2));
+        var power = parseInt(Math.pow(10, intial));
+        var number = parseInt(value / power) * power;
+        if (number >= 1e6)
+            return value / 1e6 + 'M';
+        if (number >= 1e3)
+            return value / 1e3 + 'K';
+    }
+</script>
+
+

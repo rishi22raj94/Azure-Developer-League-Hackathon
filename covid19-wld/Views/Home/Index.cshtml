@@ -1,0 +1,476 @@
+﻿@model covid19_wld.Model.ViewModelCovid
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Covid";
+}
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Covid-19
+    </title>
+    <link rel="icon" href="~/Images/covid-icon.png" type="image/x-icon">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script data-require="jquery" data-semver="2.2.0" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <link href="~/bootstrap-new/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/bootstrap-new/js/bootstrap.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/Covid.css" type="text/css" />
+    @*<script data-ad-client="ca-pub-7167314224050589" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>*@
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:black;">
+        <a class="navbar-brand" href="@Url.Action("Index","Home", new { })">RISHI</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="@Url.Action("Index","Home", new { })">COVID19-INDIA <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="@Url.Action("Weather","Home", new { })">WEATHER</a>
+                <a class="nav-item nav-link" href="@Url.Action("Vaccine","Home", new { })">VACCINE</a>
+                @*<a class="nav-item nav-link" href="@Url.Action("Birthday","Home", new { })">BIRTHDAY</a>
+        <a class="nav-item nav-link" href="@Url.Action("Maps","Home", new { })">MAPS</a>*@
+            </div>
+        </div>
+    </nav>
+    <section class="covid index">        
+        <div class="row1">
+            @Html.AntiForgeryToken()
+            <label>State<span aria-hidden="true" class="required">*</span></label>
+            @Html.DropDownList("JobTitle", null, "Select a state", new { @id = "state", @class = "form-control" })
+            <span class="text-danger" id="errorstate" style="display:none">Please select state</span>
+            <label>Date<span aria-hidden="true" class="required">*</span></label>
+            <i class="fa fa-calendar fa-2x" id="cal" aria-hidden="true"></i>
+            <input class="form-control valid" id="date" value="dd-mmm-yy">
+            <span class="text-danger" id="errordate" style="display:none">Invalid date format</span>
+            <label>Confirmed</label>
+            <input class="Confirmed" type="checkbox">
+
+            <label>Recovered</label>
+            <input class="Recovered" type="checkbox">
+
+            <label>Deceased</label>
+            <input class="Decreased" type="checkbox">
+
+        </div>
+        <br><br>
+        <div class="text-center" id="submitdiv">
+            <button class="btn btn-light" type="button" id="submitButton" value="Search">Search</button>
+            &nbsp;
+            <button class="btn btn-light" type="reset" id="resetButton" value="Reset">Reset</button>
+        </div>
+        <br>
+        <div id="showloding" style="display:none">
+            <div class="spinner-grow spinner-grow-sm" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow spinner-grow-sm" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow spinner-grow-sm" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <br>
+        @if (Model.UserData != null && Model.covidtracker != null && Model.statewisedetails != null)
+        {
+            <div class="table-responsive" id="resulttable" style="display: none;">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Beds-Availability</th>
+                            <th scope="col">State</th>
+                            <th scope="col">Confirmed</th>
+                            <th scope="col">Recovered</th>
+                            <th scope="col">Deceased</th>
+                            <th scope="col">Tested</th>
+                            <th scope="col">Vaccinated</th>
+                            <th scope="col">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">@Model.UserData.datetime</th>
+                            @if (!String.IsNullOrEmpty(Model.bedsAvailability.URL) && Model.bedsAvailability.URL.Contains("Helpline"))
+                            {
+                                <td id="beds-availability-helpline" onclick="alert('No website available for this state.\n'+'@Model.bedsAvailability.URL')"><a href="#">Click Me</a></td>
+
+                            }
+                            else if (!String.IsNullOrEmpty(Model.bedsAvailability.URL))
+                            {
+                                <td id="beds-availability"><a href="@Model.bedsAvailability.URL">Click Me</a></td>
+                            }
+                            <td id="statename">@Model.UserData.statename</td>
+                            <td id="confirm_checkbox">
+                                @if (Model.UserData.confirmed == true || Model.UserData.default_checkbox == false)
+                                {
+                                    @Model.covidtracker.Confirmed
+                                }
+                            </td>
+                            <td id="recovered_checkbox">
+                                @if (Model.UserData.recovered == true || Model.UserData.default_checkbox == false)
+                                {
+                                    @Model.covidtracker.Recovered
+                                }
+                            </td>
+                            <td id="decreased_checkbox">
+                                @if (Model.UserData.decreased == true || Model.UserData.default_checkbox == false)
+                                {
+                                    @Model.covidtracker.Deceased
+                                }
+                            </td>
+                            <td id="tested_checkbox">
+                                
+                                    @Model.covidtracker.Tested
+                                
+                            </td>
+                            <td id="adminvaccinated_checkbox">
+                                
+                                    @Model.covidtracker.AdminVaccinated
+                                
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-outline-dark" id="LOC" data-toggle="modal" data-target="#myModal">Total</button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content" style="background-color:black;border: 2px solid rgba(0,0,0,.2);border-radius: .5rem;">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="myModalLabel">Addtional Information</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div>
+                                                    <span>Active-@Model.statewisedetails.active, Confirmed- @Model.statewisedetails.confirmed, Deaths-@Model.statewisedetails.deaths</span>
+                                                </div>
+                                                <br />
+                                                    @if (Model.statewisedetails.deltaconfirmed != "0" && Model.statewisedetails.deltadeaths != "0")
+                                                    {
+                                                        <div>
+                                                            <span>DeltaConfirmed-@Model.statewisedetails.deltaconfirmed, DeltaDeaths-@Model.statewisedetails.deltadeaths</span>
+                                                        </div>
+                                                        <br />
+                                                    }
+                                                    @if (Model.statewisedetails.deltarecovered != "0")
+                                                    {
+                                                        <div>
+                                                            <span data-api="current_wind_speed">DeltaRecovered-@Model.statewisedetails.deltarecovered </span>
+                                                        </div>
+                                                        <br />
+                                                    }
+                                                    <div>
+                                                        <span data-api="current_precip">LastUpdatedTime-@Model.statewisedetails.lastupdatedtime</span>
+                                                    </div>
+                                                    <br />
+                                                    <div>
+                                                        <span data-api="current_temperature">Recovered-@Model.statewisedetails.recovered</span>
+                                                    </div>
+                                                    <br />
+                                                    @if (!String.IsNullOrEmpty(Model.statewiseTotalVaccination))
+                                                    {
+                                                        <div>
+                                                            <span data-api="current_temperature">Vaccination-@Model.statewiseTotalVaccination</span>
+                                                        </div>
+                                                        <br />
+                                                    }
+
+                                                    <div id="Infostate">
+                                                        <span data-api="current_pressure">State-@Model.statewisedetails.state</span>
+                                                    </div>
+                                                    <br />
+                                                    <div id="Infostatecode">
+                                                        <span data-api="current_pressure">StateCode-@Model.statewisedetails.statecode</span>
+                                                    </div>
+                                                    <br />
+                                                    <div>
+                                                        <span data-api="current_temperature">StateNotes-@Model.statewisedetails.statenotes</span>
+                                                    </div>
+                                                </div>
+                                            <div class="modal-footer">
+                                                <button type="button" id="modelclose" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <input type="hidden" id="apiresult" value="@Html.Raw(this.ViewData["ApiDataFailedResult"])" />
+        }
+        <br />
+        <br />
+        @if (Model.live != null)
+        {
+            <div class="table-responsive" id="indiastatus" style="max-width:65%;margin: 0 auto;">
+                <table class="table table-hover table-sm">
+                    <caption>Live Details of Covid-19 India</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Active</th>
+                            <th scope="col">Vaccinated</th>
+                            <th scope="col">Confirmed</th>
+                            <th scope="col">Recovered</th>
+                            <th scope="col">Deceased</th>
+                            <th scope="col">LastUpdatedTime</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>@Model.live.active</b></td>
+                            <td><b>@Model.live.vaccinated</b></td>
+                            <td><b>@Model.live.confirmed</b></td>
+                            <td><b>@Model.live.recovered</b></td>
+                            <td><b>@Model.live.deceased</b></td>
+                            <th scope="row">@Model.live.lastupdatedtime</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="table-responsive">
+            <table class="table table-hover table-sm">
+                <caption>Crowdsourced Resources</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Resources</th>
+                        <th scope="col">URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Covid-19 Resources For Remdesvir/Injections and Blood and Plasma</th>
+                        <td><a href="https://docs.google.com/spreadsheets/d/1OL7go19rRpSdxemQXHM0cTBds2hjspj7_U7Ag7NdOCQ/htmlview#">Click Me</a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">COVID-19 Help Database for Oxygen, DoctorConsultations, Ambulance Service and other critical services</th>
+                        <td><a href="https://drive.google.com/drive/u/0/folders/1y8fjrbdGEGmcStkNE_Jf5sNRaDCY4zRA">Click Me</a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">COVID-19 AID: Community Kitchen Initiatives</th>
+                        <td><a href="https://docs.google.com/spreadsheets/d/1J2kObssgqNH0cpIZcjkdc8szhlz9pJazTMFyQ-fDo_A/edit#gid=1904066023">Click Me</a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ALL INDIA COVID-19 HELPLINE</th>
+                        <td><a href="https://docs.google.com/document/d/16WeMKah7RXoB1gnqa9YXVTuWM4TR6hY9Qys48Pf8mCc/edit">Click Me</a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Covid-19 Verified Helplines Project</th>
+                        <td><a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQyasU1SAeicUEkSbz9Nfxdt2hdas6-5cdcO1S30uNIqQ53pX3aHxW8FC4pGVOiJlseVDK5k6T2vuUc/pubhtml?widget=true&headers=false#gid=664543177">Click Me</a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">All COVID Resources.</th>
+                        <td><a href="https://linktr.ee/Okayival">Click Me</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <br />
+        <partial name="Chart" model="Model" />
+        <br />
+        <img src="~/Images/covid-19.jpg" class="d-block w-100" alt="First Slide">
+    </section>
+    <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            @*var confirmed = @Html.Raw(Json.Serialize(Model.csv.csv_confirmed));
+            var dates = @Html.Raw(Json.Serialize(Model.csv.csv_dates));
+            alert(confirmed);
+            alert(dates);*@
+                $('#state option[value="Total"]').insertBefore('#state option[value="Andaman and Nicobar Islands"]');
+                $("#state option[value='Total']").text("All");
+                $("#statename:contains('Total')").html("All");
+                $("#Infostate:contains('Total')").html("State-All");
+                $("#Infostatecode:contains('TT')").html("StateCode-All");
+                $('#state option[value="State Unassigned"]').remove();
+                $('#showloding').hide();
+                $('#errordate').hide();
+                $('#errorstate').hide();
+                $('#resulttable').show();
+                $("#date").datepicker({
+                    dateFormat: "dd-M-y",
+                    changeYear: true,
+                    changeMonth: true,
+                    maxDate: '-1D',
+                });
+
+
+                var apiresult = $('#apiresult').val();
+                if (apiresult == "True") {
+                    alert("Please try again with valid input data");
+                }
+                $("#cal").click(function () {
+                    $('#date').datepicker("show");
+                })
+
+
+                $("#date").on("click", function () {
+                    $("#date").val(null);
+                });
+
+           
+                $("#resetButton").on("click", function () {
+
+                    $("#state")[0].selectedIndex = 0;
+                    $('#errordate').hide();
+                    $('#errorstate').hide();
+                    $('#resulttable').hide();
+                    $("#date").val(null);
+                    $('input:checkbox').each(function () {
+                        this.checked = false;
+                    });
+                });
+
+
+                //$('.modal-content').resizable({
+                //    minHeight: 325,
+                //    minWidth: 525
+                //});
+                //$('.modal-dialog').draggable();
+
+                //$('#myModal').on('show.bs.modal', function () {
+                //    $(this).find('.modal-body').css({
+                //        'max-height': '100%'
+                //    });
+                //});
+
+                $("#submitButton").on("click", function () {
+                    $('#showloding').show();
+                    var Confirmed = false;
+                    var Recovered = false;
+                    var Decreased = false;
+                    var default_checkbox = false;
+                    var dateRegex = /^(0?[1-9]|[12][0-9]|3[0-1])[-](0?[1-9]|1[0-2]|[a-zA-Z]{3})[-](19|20)?\d{2}$/;
+                    var inputdate = $("#date").val();
+                    var statenameRegex = /^[A-Za-z][A-Za-z\s]*$/;
+                    var inputstatename = $("#state").val();
+                    var userinputerror = false;
+                    if ($("#state").val() != "") {
+                        $('#errorstate').hide();
+                    } else {
+                        $('#errorstate').show();
+                    }
+                    if (!inputdate.match(dateRegex)) {
+                        userinputerror = true;
+                    }
+
+                    if ($('input.Confirmed').is(':checked')) {
+                        Confirmed = true;
+                        default_checkbox = true;
+                    }
+                    if ($('input.Recovered').is(':checked')) {
+                        Recovered = true;
+                        default_checkbox = true;
+                    }
+                    if ($('input.Decreased').is(':checked')) {
+                        Decreased = true;
+                        default_checkbox = true;
+                    }
+
+
+                    var userdata = JSON.stringify({
+                        'statename': inputstatename,
+                        'datetime': inputdate,
+                        'confirmed': Confirmed,
+                        'recovered': Recovered,
+                        'decreased': Decreased,
+                        'default_checkbox': default_checkbox,
+                        'userinputerror': userinputerror
+                    });
+
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'HTML',
+                        url: '@Url.Action("Index", "Home")',
+                        data: userdata,
+                        contentType: "application/json",
+                        beforeSend: function (xhr) { // RequestVerificationToken is required since we have added AutoValidateAntiforgeryTokenAttribute in the Startup.cs
+                            xhr.setRequestHeader("RequestVerificationToken",
+                                $('input:hidden[name="__RequestVerificationToken"]').val());
+                        },
+                        async: true,
+                        processData: false,
+                        cache: false,
+                        success: function (result) {
+                            $('#showloding').hide();
+                            $("body").html(result);
+                        },
+
+                        error: function (jqXHR, exception) {
+                            var msg = '';
+                            if (jqXHR.status === 0) {
+                                msg = 'Not connect.\n Verify Network.';
+                                alert(msg);
+                            } else if (jqXHR.status == 404) {
+                                msg = 'Requested page not found. [404]';
+                                alert(msg);
+                            } else if (jqXHR.status == 500) {
+                                msg = 'Internal Server Error [500].';
+                                $('#errordate').show();
+                                if ($("#state").val() == "") {
+                                    $('#errorstate').show();
+                                }
+                                $('#showloding').hide();
+                            } else if (exception === 'parsererror') {
+                                msg = 'Requested JSON parse failed.';
+                                alert(msg);
+                            } else if (exception === 'timeout') {
+                                msg = 'Time out error.';
+                                alert(msg);
+                            } else if (exception === 'abort') {
+                                msg = 'Ajax request aborted.';
+                                alert(msg);
+                            } else {
+                                msg = 'Error.\n' + jqXHR.responseText;
+                                alert(msg);
+                            }
+                        }
+                    });
+                });
+
+                function displayView(data) {
+                }
+
+                $("input[type=checkbox]").on("click", function () {
+                    var Confirmed = false;
+                    var Recovered = false;
+                    var Decreased = false;
+                    if ($('input.Confirmed').is(':checked')) {
+                        Confirmed = true;
+                    }
+                    if ($('input.Recovered').is(':checked')) {
+                        Recovered = true;
+                    }
+                    if ($('input.Decreased').is(':checked')) {
+                        Decreased = true;
+                    }
+                });
+            });
+
+    </script>
+</body>
+</html>
+
+
