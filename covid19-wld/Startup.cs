@@ -56,13 +56,7 @@ namespace covid19_wld
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id=''}");
-
-                // routes.MapRoute(
-                //"Default", // Route name
-                //"{controller}/{action}/{id}", // URL with parameters
-                //new { controller = "Home", action = "Index", id = System.Web.Mvc.UrlParameter.Optional } // Parameter defaults
-                //    );
+                    template: "{controller=Home}/{action=Index}/{id=''}");                
             });
         }
     }

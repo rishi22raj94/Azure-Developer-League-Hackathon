@@ -16,8 +16,7 @@ namespace covid19_wld.Model
         public IndiaStateDistrictWise.Statewise statewisedetails { get; set; }
         public CovidTracker covidtracker { get; set; }
         public LiveCases live { get; set; }
-        public Chart chart { get; set; }
-        public CSVTesting csv { get; set; }
+        public Chart chart { get; set; }        
         public BedsAvailability bedsAvailability { get; set; }
         public VaccineCenterByPin.Center vaccineCenterByPin { get; set; }
 

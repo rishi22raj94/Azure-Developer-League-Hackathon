@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "e9874+f0TqaycGGZ8u285ueQ7/dN6oaDPUzcrYFjolJZiFJGKqNpMhMAV5Y86R5eSlHn++VbQCh82Zy7aotZXQ==",
+  "dgSpecHash": "RFFZMxk3RyG/YNvXa4O5lmJ2y0xDVAknWA7DqNQqIhOtHqzRzc5MSP1h3PoYYiTDdOIjo2r75umtaNNp1Zc3Cg==",
   "success": true,
-  "projectFilePath": "C:\\Rishi\\covid19-wld\\covid19-wld\\covid19-wld\\covid19_wld.csproj",
+  "projectFilePath": "C:\\Rishi\\Azure Developer League Hackathon\\Azure-Developer-League-Hackathon\\covid19-wld\\covid19_wld.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\I524121\\.nuget\\packages\\azure.core\\1.6.0\\azure.core.1.6.0.nupkg.sha512",
     "C:\\Users\\I524121\\.nuget\\packages\\azure.extensions.aspnetcore.configuration.secrets\\1.0.0\\azure.extensions.aspnetcore.configuration.secrets.1.0.0.nupkg.sha512",

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Rishi\\covid19-wld\\covid19-wld\\covid19-wld\\covid19_wld.csproj": {}
+    "C:\\Rishi\\Azure Developer League Hackathon\\Azure-Developer-League-Hackathon\\covid19-wld\\covid19_wld.csproj": {}
   },
   "projects": {
-    "C:\\Rishi\\covid19-wld\\covid19-wld\\covid19-wld\\covid19_wld.csproj": {
+    "C:\\Rishi\\Azure Developer League Hackathon\\Azure-Developer-League-Hackathon\\covid19-wld\\covid19_wld.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Rishi\\covid19-wld\\covid19-wld\\covid19-wld\\covid19_wld.csproj",
+        "projectUniqueName": "C:\\Rishi\\Azure Developer League Hackathon\\Azure-Developer-League-Hackathon\\covid19-wld\\covid19_wld.csproj",
         "projectName": "covid19_wld",
-        "projectPath": "C:\\Rishi\\covid19-wld\\covid19-wld\\covid19-wld\\covid19_wld.csproj",
+        "projectPath": "C:\\Rishi\\Azure Developer League Hackathon\\Azure-Developer-League-Hackathon\\covid19-wld\\covid19_wld.csproj",
         "packagesPath": "C:\\Users\\I524121\\.nuget\\packages\\",
-        "outputPath": "C:\\Rishi\\covid19-wld\\covid19-wld\\covid19-wld\\obj\\",
+        "outputPath": "C:\\Rishi\\Azure Developer League Hackathon\\Azure-Developer-League-Hackathon\\covid19-wld\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

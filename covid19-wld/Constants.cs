@@ -16,8 +16,7 @@ namespace covid19_wld
         public string WEATHERAPIPARAMETERS_FORCURRENTLOCATION = "current?access_key=5408f7dc48a7700f24a45f483478031b&query=";
         public string RAILWAY_STATIONSURLPARAMETER = "?resource_id=e720aed4-33f8-4b3b-b847-3c2d86c3ca3a&limit=14";
         public string ROADSURLPARAMETER = "?resource_id=14f81966-4db8-4f57-8b5b-88969fd12843&limit=14";
-        public string INDIACOVIDSTATUS = "https://api.covid19india.org/data.json";
-        //public string DAILYCOVIDSTATUS = "https://api.covid19india.org/states_daily.json";
+        public string INDIACOVIDSTATUS = "https://api.covid19india.org/data.json";        
         public string DAILYCOVIDSTATUS = "https://api.covid19india.org/v4/min/timeseries.min.json";
         public string IPADDRESS = string.Empty;
     }

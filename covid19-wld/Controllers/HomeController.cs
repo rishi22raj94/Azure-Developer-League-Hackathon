@@ -42,8 +42,7 @@ namespace covid19_wld.Controllers
         private static string IndiaCovidStatus;
         private static string DailyCovidStatus;
         private ViewModelCovid covid;
-        private Chart chart;
-        private CSVTesting csv_testing;
+        private Chart chart;        
         private LiveCases live;
         private VaccineCenterByPin.Center vaccineCenterByPin;
         private CovidTracker covidTrackerModel;
@@ -58,8 +57,7 @@ namespace covid19_wld.Controllers
             _logger = logger;
             this.telemetry = telemetry;
             covid = new ViewModelCovid();
-            chart = new Chart();
-            csv_testing = new CSVTesting();
+            chart = new Chart();            
             live = new LiveCases();
             vaccineCenterByPin = new VaccineCenterByPin.Center();
             covidTrackerModel = new CovidTracker();
@@ -84,9 +82,7 @@ namespace covid19_wld.Controllers
         public async Task<IActionResult> Index()
         {
             try
-            {
-                //var DailyCovidStatus = await GetDailyCovidStatus();
-
+            {                
                 IndiaStateDistrictWise.Rootobject data = null;
 
                 using (var client = new HttpClient())
@@ -101,8 +97,7 @@ namespace covid19_wld.Controllers
                         var dataObjects = JsonConvert.DeserializeObject<IndiaStateDistrictWise.Rootobject>(customerJsonString);
                         data = dataObjects;
                         client.Dispose();
-                        covid.IndiaStateDistrictWise = data;
-                        //covid.DailyCovidStatus = DailyCovidStatus;
+                        covid.IndiaStateDistrictWise = data;                        
 
                         var tested_results = (from testedresult in covid.IndiaStateDistrictWise.tested.Select((testeddetails) => new { testeddetails })
                                               select new
@@ -121,21 +116,7 @@ namespace covid19_wld.Controllers
                                                       livedetails_deceased = liveresult.livedetails.totaldeceased,
                                                       livedetails_recovered = liveresult.livedetails.totalrecovered,
                                                       livedetails_date = liveresult.livedetails.date
-                                                  }).Distinct().ToList();
-
-                        //var live_tested_cases = (from testedresultnumbers in tested_results.Select((testeddetailsnumbers) => new { testeddetailsnumbers })
-                        //                         select new
-                        //                         {
-                        //                             tested_numbers = testedresultnumbers.testeddetailsnumbers.live_tested_numbers,
-                        //                             tested_date = testedresultnumbers.testeddetailsnumbers.tested_date
-                        //                         }).Distinct().ToDictionary(mc => mc.tested_date.ToString(),
-                        //                                     mc => mc.tested_numbers.ToString(),
-                        //                                     StringComparer.OrdinalIgnoreCase);
-
-                        //string csv_livedetails_confirmed = string.Join(",", live_cases_results.TakeLast(7).Select(x => x.livedetails_confirmed).ToList());
-                        //string csv_livedetails_date = string.Join(",", live_cases_results.TakeLast(7).Select(x => x.livedetails_date.Remove(6,2)).ToList());
-                        //csv_testing.csv_confirmed = (csv_livedetails_confirmed.Trim(',').Split(',').ToList()).ConvertAll(int.Parse);
-                        //csv_testing.csv_dates = csv_livedetails_date.Trim(',').Split(',').ToList();
+                                                  }).Distinct().ToList();                        
 
                         List<int> totalconfirmed = new List<int>();
                         foreach (var confirm in live_cases_results.TakeLast(7))
@@ -271,8 +252,7 @@ namespace covid19_wld.Controllers
                         if (live != null)
                         {
                             covid.live = live;
-                            covid.chart = chart;
-                            //covid.csv = csv_testing;
+                            covid.chart = chart;                            
                         }
                         IEnumerable<SelectListItem> items = state_names_codes.Select(c => new SelectListItem
                         {
@@ -315,9 +295,7 @@ namespace covid19_wld.Controllers
             try
             {
                 if (!userdata.userinputerror)
-                {
-                    //var DailyCovidStatus = await GetDailyCovidStatus();
-
+                {                    
                     using (var client = new HttpClient())
                     {
                         client.BaseAddress = new Uri(URL);
@@ -330,8 +308,7 @@ namespace covid19_wld.Controllers
                             var dataObjects = JsonConvert.DeserializeObject<IndiaStateDistrictWise.Rootobject>(customerJsonString);
                             data = dataObjects;
                             client.Dispose();
-                            covid.IndiaStateDistrictWise = data;
-                            //covid.DailyCovidStatus = DailyCovidStatus;
+                            covid.IndiaStateDistrictWise = data;                           
 
                             var tested_results = (from testedresult in covid.IndiaStateDistrictWise.tested.Select((testeddetails) => new { testeddetails })
                                                   select new
@@ -350,16 +327,7 @@ namespace covid19_wld.Controllers
                                                           livedetails_deceased = liveresult.livedetails.totaldeceased,
                                                           livedetails_recovered = liveresult.livedetails.totalrecovered,
                                                           livedetails_date = liveresult.livedetails.date
-                                                      }).Distinct().ToList();
-
-                            //var live_tested_cases = (from testedresultnumbers in tested_results.Select((testeddetailsnumbers) => new { testeddetailsnumbers })
-                            //                         select new
-                            //                         {
-                            //                             tested_numbers = testedresultnumbers.testeddetailsnumbers.live_tested_numbers,
-                            //                             tested_date = testedresultnumbers.testeddetailsnumbers.tested_date
-                            //                         }).Distinct().ToDictionary(mc => mc.tested_date.ToString(),
-                            //                                     mc => mc.tested_numbers.ToString(),
-                            //                                     StringComparer.OrdinalIgnoreCase);
+                                                      }).Distinct().ToList();                            
 
                             List<int> totalconfirmed = new List<int>();
                             foreach (var confirm in live_cases_results.TakeLast(7))
@@ -454,9 +422,7 @@ namespace covid19_wld.Controllers
                                     dates_tested.Add(date_value);
                                 }
 
-                            }
-
-                            //var covidstatus_perdate = covid.DailyCovidStatus.states_daily.Where(r => r.date == userdata.datetime).ToList();
+                            }                            
 
                             var state_names_codes = (from result in covid.IndiaStateDistrictWise.statewise.Select((statedetails) => new { statedetails })
                                                      select new
@@ -528,13 +494,7 @@ namespace covid19_wld.Controllers
                                 if (!String.IsNullOrEmpty(dailyCovidDetails.Item2))
                                 {
                                     covid.statewiseTotalVaccination = FormatNumber(Convert.ToInt32(dailyCovidDetails.Item2));
-                                }
-                                //var confirmed = covidstatus_perdate[0];
-                                //covidTrackerModel.Confirmed = Convert.ToInt32(confirmed.GetType().GetProperty(userinput_statenamesandcode.state_code).GetValue(confirmed, null));
-                                //var recovered = covidstatus_perdate[1];
-                                //covidTrackerModel.Recovered = Convert.ToInt32(recovered.GetType().GetProperty(userinput_statenamesandcode.state_code).GetValue(recovered, null));
-                                //var decreased = covidstatus_perdate[2];
-                                //covidTrackerModel.Deceased = Convert.ToInt32(decreased.GetType().GetProperty(userinput_statenamesandcode.state_code).GetValue(decreased, null));
+                                }                                
                                 if (vaccinated.Count > 0)
                                 {
                                     covidTrackerModel.Vaccinated = FormatNumber(Convert.ToInt32(vaccinated.Last()));
@@ -610,22 +570,7 @@ namespace covid19_wld.Controllers
                     if (responseTask.IsSuccessStatusCode)
                     {
                         var customerJsonString = await responseTask.Content.ReadAsStringAsync();
-                        var dataObjects = JsonConvert.DeserializeObject<Location_Weather.Weather>(customerJsonString);
-                        //JObject obj = JObject.Parse(customerJsonString);
-                        //var forecast_details = obj.SelectToken("forecast").Children().OfType<JProperty>()
-                        //            .ToDictionary(p => p.Name, p => new
-                        //            {
-                        //                MaxTemp = (int)p.First()["maxtemp"],
-                        //                MinTemp = (int)p.First()["mintemp"]
-                        //            });
-                        //if (forecast_details.Count > 0)
-                        //{
-                        //    int max_temp = forecast_details.Values.Select(x => x.MaxTemp).FirstOrDefault();
-                        //    int min_temp = forecast_details.Values.Select(x => x.MinTemp).FirstOrDefault();
-                        //    //mymodel.maxtemp = max_temp;
-                        //    //mymodel.mintemp = min_temp;
-                        //}
-
+                        var dataObjects = JsonConvert.DeserializeObject<Location_Weather.Weather>(customerJsonString);                       
                         data = dataObjects;
                         client.Dispose();
                         if (ipaddress != null && data != null && validipaddress != null)
@@ -771,8 +716,7 @@ namespace covid19_wld.Controllers
                     {
                         vaccine_result.from = TimingToAMandPM(vaccine_result.from);
                         vaccine_result.to = TimingToAMandPM(vaccine_result.to);
-                        address = vaccine_result.name + "\n" + vaccine_result.address + "\n" + vaccine_result.state_name + ", " + vaccine_result.pincode + "\n" + "Timings: " + vaccine_result.from + " - " + vaccine_result.to + "\n" + "Type: " + vaccine_result.fee_type;
-                        //addressForUI.Add(address);
+                        address = vaccine_result.name + "\n" + vaccine_result.address + "\n" + vaccine_result.state_name + ", " + vaccine_result.pincode + "\n" + "Timings: " + vaccine_result.from + " - " + vaccine_result.to + "\n" + "Type: " + vaccine_result.fee_type;                        
                         List<KeyValuePair<string, VaccineCenterByPin.Session>> listOfSessionsByDate = new List<KeyValuePair<string, VaccineCenterByPin.Session>>();
                         Dictionary<string, VaccineCenterByPin.Session> dict = new Dictionary<string, VaccineCenterByPin.Session>();
                         foreach (var vaccine_result_sessions in vaccine_result.sessions)
@@ -897,15 +841,7 @@ namespace covid19_wld.Controllers
                 this.telemetry.TrackEvent("Vaccine Info Page Failed- Post method");
                 return View("ErrorPage");
             }
-        }
-
-        //[HttpGet]
-        //public async Task<IActionResult> BirthdayMain(string date)
-        //{
-        //    this.telemetry.InstrumentationKey = GetInstrumentationKey();
-        //    this.telemetry.TrackEvent("Birthday Page Loaded Successfully.");
-        //    return View("BirthdayMain");
-        //}
+        }        
 
         private async Task<VaccineCenterByPin> GetVaccineByPin(string pincode, string date)
         {
@@ -913,24 +849,7 @@ namespace covid19_wld.Controllers
             bool retry = true;
             try
             {
-                VaccineCenterByPin data = null;
-
-                //var client = new RestClient(VaccineCenterByPin + "?" + "pincode=" + pincode + "&" + "date=" + date);
-                //client.Timeout = -1;
-                //var request = new RestRequest(VaccineCenterByPin + "?" + "pincode=" + pincode + "&" + "date=" + date,Method.GET,DataFormat.Json);
-                //request.ReadWriteTimeout = 4000;
-                //IRestResponse response = client.Execute(request);
-                //if (response.IsSuccessful)
-                //{                
-                //    var dataObjects = JsonConvert.DeserializeObject<VaccineCenterByPin>(response.Content);
-                //    data = dataObjects;
-
-                //}
-                //else //web api sent error response 
-                //{
-                //    //log response status here..
-                //    data = null;
-                //}
+                VaccineCenterByPin data = null;                
 
                 using (var client = new HttpClient())
                 {
@@ -998,8 +917,8 @@ namespace covid19_wld.Controllers
 
         private async Task<Location_Weather.ClientIPAddress> GetIpaddress()
         {
-            //string clientIPAddress = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
-            var ip = /*"27.59.201.51";*/ _accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();//Gives you client IPAddress
+            //string clientIPAddress = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();//Gives you client IPAddress
+            var ip = "27.59.201.51"; /* Please change this IP Address*/
             Location_Weather.ClientIPAddress data = null;
             using (var client = new HttpClient())
             {
@@ -1026,7 +945,8 @@ namespace covid19_wld.Controllers
 
         private async Task<Location_Weather.ValidIPAddress> GetValidIpaddress()
         {
-            var ip = /*"27.59.201.51";*/ _accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();//Gives you client IPAddress
+            //string clientIPAddress = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();//Gives you client IPAddress
+            var ip = "27.59.201.51"; /* Please change this IP Address*/
             Location_Weather.ValidIPAddress data = null;
             using (var client = new HttpClient())
             {
@@ -1062,9 +982,7 @@ namespace covid19_wld.Controllers
 
                 if (responseTask.IsSuccessStatusCode)
                 {
-                    var customerJsonString = await responseTask.Content.ReadAsStringAsync();
-                    //var date = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
-                    //var dailyDetails = await DailyCovidCases(customerJsonString, statecode, date);
+                    var customerJsonString = await responseTask.Content.ReadAsStringAsync();                    
                     var dataObjects = JsonConvert.DeserializeObject<StateWiseDailyCovidCasesData>(customerJsonString);
                     data = dataObjects;
                     client.Dispose();
@@ -1093,8 +1011,7 @@ namespace covid19_wld.Controllers
 
                 if (responseTask.IsSuccessStatusCode)
                 {
-                    var customerJsonString = await responseTask.Content.ReadAsStringAsync();
-                    //var date = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
+                    var customerJsonString = await responseTask.Content.ReadAsStringAsync();                    
                     var dailyDetails = DailyCovidCases(customerJsonString, statecode, userInputedDate, out statewiseVaccinatedPeople);
                     if (dailyDetails.Count > 0)
                     {
