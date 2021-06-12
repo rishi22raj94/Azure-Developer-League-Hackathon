@@ -24,8 +24,7 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="~/css/Covid.css" type="text/css" />
-    @*<script data-ad-client="ca-pub-7167314224050589" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>*@
+    <link rel="stylesheet" href="~/css/Covid.css" type="text/css" />   
 </head>
 
 <body>
@@ -38,9 +37,7 @@
             <div class="navbar-nav">
                 <a class="nav-item nav-link active" href="@Url.Action("Index","Home", new { })">COVID19-INDIA <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" href="@Url.Action("Weather","Home", new { })">WEATHER</a>
-                <a class="nav-item nav-link" href="@Url.Action("Vaccine","Home", new { })">VACCINE</a>
-                @*<a class="nav-item nav-link" href="@Url.Action("Birthday","Home", new { })">BIRTHDAY</a>
-        <a class="nav-item nav-link" href="@Url.Action("Maps","Home", new { })">MAPS</a>*@
+                <a class="nav-item nav-link" href="@Url.Action("Vaccine","Home", new { })">VACCINE</a>               
             </div>
         </div>
     </nav>
@@ -294,11 +291,7 @@
     <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
     <script type="text/javascript">
 
-        $(document).ready(function () {
-            @*var confirmed = @Html.Raw(Json.Serialize(Model.csv.csv_confirmed));
-            var dates = @Html.Raw(Json.Serialize(Model.csv.csv_dates));
-            alert(confirmed);
-            alert(dates);*@
+        $(document).ready(function () {           
                 $('#state option[value="Total"]').insertBefore('#state option[value="Andaman and Nicobar Islands"]');
                 $("#state option[value='Total']").text("All");
                 $("#statename:contains('Total')").html("All");
@@ -341,20 +334,7 @@
                     $('input:checkbox').each(function () {
                         this.checked = false;
                     });
-                });
-
-
-                //$('.modal-content').resizable({
-                //    minHeight: 325,
-                //    minWidth: 525
-                //});
-                //$('.modal-dialog').draggable();
-
-                //$('#myModal').on('show.bs.modal', function () {
-                //    $(this).find('.modal-body').css({
-                //        'max-height': '100%'
-                //    });
-                //});
+                });               
 
                 $("#submitButton").on("click", function () {
                     $('#showloding').show();

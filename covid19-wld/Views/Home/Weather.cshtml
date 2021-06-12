@@ -35,9 +35,7 @@
             <div class="navbar-nav">
                 <a class="nav-item nav-link" href="@Url.Action("Index","Home", new { })">COVID19-INDIA <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link active" href="@Url.Action("Weather","Home", new { })">WEATHER</a>
-                <a class="nav-item nav-link" href="@Url.Action("Vaccine","Home", new { })">VACCINE</a>
-                @*<a class="nav-item nav-link" href="@Url.Action("Birthday","Home", new { })">BIRTHDAY</a>
-        <a class="nav-item nav-link" href="@Url.Action("Maps","Home", new { })">MAPS</a>*@
+                <a class="nav-item nav-link" href="@Url.Action("Vaccine","Home", new { })">VACCINE</a>               
             </div>
         </div>
     </nav>
@@ -66,9 +64,7 @@
                     </div>
 
                     <div class="main_right">
-
-                        @*<span data-api="max_temp" class="Maxtemp">Max-Temp: @Model.maxtemp°c</span>
-                    <span data-api="min_temp" class="Mintemp">Min-Temp: @Model.mintemp°c</span>*@
+                       
                         <span data-api="current_wind_speed" class="windspeed">Wind: @Model.Weather.Current.WindSpeed kmph</span>
                         <span data-api="current_precip" class="Precip">Precip: @Model.Weather.Current.Precip mm</span>
                         <span data-api="current_temperature" class="Humidity">Humidity: @Model.Weather.Current.Humidity%</span>
@@ -183,20 +179,7 @@
         $(document).ready(function () {            
             $('.container').draggable();
             alert("The details are based on IP Address. So, Please disconnect VPN if any to get accurate details.");
-        });
-
-        //function showModalPopUp() {
-        //    //alert("You are about to see your Location and IP address details");
-        //    if (confirm('You are about to see your Location and IP address details')) {
-        //        // Save it!
-        //        $('#LOC').attr('data-toggle', 'modal');
-        //        console.log('Ok');
-        //    } else {
-        //        // Do nothing!
-        //        $('#LOC').attr('data-toggle', '');
-        //        console.log('Hide');
-        //    }
-        //}
+        });        
 
         function showModalPopUp() {
             $('#LOC').attr('data-toggle', 'modal');
