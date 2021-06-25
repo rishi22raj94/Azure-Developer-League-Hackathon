@@ -705,18 +705,19 @@ namespace covid19_wld.Controllers
                 List<string> sessionsForUI = new List<string>();
                 string sessionsFor18 = string.Empty;
                 string sessionsFor45 = string.Empty;
+                string sessionsForUnknownAge = string.Empty;
 
                 List<VaccineCenterByPin.Session> latestSessionFor18 = new List<VaccineCenterByPin.Session>();
                 List<VaccineCenterByPin.Session> latestSessionFor45 = new List<VaccineCenterByPin.Session>();
                 List<KeyValuePair<string, string>> sessionsByDate = new List<KeyValuePair<string, string>>();
-                
+
                 if (data != null)
                 {
                     foreach (var vaccine_result in data.centers)
                     {
                         vaccine_result.from = TimingToAMandPM(vaccine_result.from);
                         vaccine_result.to = TimingToAMandPM(vaccine_result.to);
-                        address = vaccine_result.name + "\n" + vaccine_result.address + "\n" + vaccine_result.state_name + ", " + vaccine_result.pincode + "\n" + "Timings: " + vaccine_result.from + " - " + vaccine_result.to + "\n" + "Type: " + vaccine_result.fee_type;                        
+                        address = vaccine_result.name + "\n" + vaccine_result.address + "\n" + vaccine_result.state_name + ", " + vaccine_result.pincode + "\n" + "Timings: " + vaccine_result.from + " - " + vaccine_result.to + "\n" + "Type: " + vaccine_result.fee_type;
                         List<KeyValuePair<string, VaccineCenterByPin.Session>> listOfSessionsByDate = new List<KeyValuePair<string, VaccineCenterByPin.Session>>();
                         Dictionary<string, VaccineCenterByPin.Session> dict = new Dictionary<string, VaccineCenterByPin.Session>();
                         foreach (var vaccine_result_sessions in vaccine_result.sessions)
@@ -724,11 +725,11 @@ namespace covid19_wld.Controllers
                             var dates = DateTime.ParseExact(vaccine_result_sessions.date, "dd-MM-yyyy", provider);
                             var rishi_result = dates.ToString("dd MMMM yyyy");
                             vaccine_result_sessions.date = rishi_result;
-                            
+
                             if (vaccine_result_sessions.min_age_limit == 18)
                             {
                                 sessionsFor18 = vaccine_result_sessions.available_capacity + "\n" + vaccine_result_sessions.available_capacity_dose1 + "\n" + vaccine_result_sessions.available_capacity_dose2 + "\n" + vaccine_result_sessions.vaccine + "\n" + vaccine_result_sessions.min_age_limit;
-                                vaccine_result_sessions.allDetails = sessionsFor18;                               
+                                vaccine_result_sessions.allDetails = sessionsFor18;
                                 List<bool> result_date = new List<bool>();
                                 foreach (var ready in old_vaccinedates)
                                 {
@@ -744,11 +745,11 @@ namespace covid19_wld.Controllers
                                 dict.Add(vaccine_result_sessions.date + "-" + "18" + "-" + vaccine_result_sessions.vaccine, vaccine_result_sessions);
                                 latestSessionFor18.Add(vaccine_result_sessions);
                             }
-                            else
+                            else if (vaccine_result_sessions.min_age_limit == 45)
                             {
                                 sessionsFor45 = vaccine_result_sessions.available_capacity + "\n" + vaccine_result_sessions.available_capacity_dose1 + "\n" + vaccine_result_sessions.available_capacity_dose2 + "\n" + vaccine_result_sessions.vaccine + "\n" + vaccine_result_sessions.min_age_limit;
                                 sessionsByDate.Add(new KeyValuePair<string, string>(vaccine_result_sessions.date, sessionsFor45));
-                                vaccine_result_sessions.allDetails = sessionsFor45;                                
+                                vaccine_result_sessions.allDetails = sessionsFor45;
                                 List<bool> result_date = new List<bool>();
                                 foreach (var ready in old_vaccinedates)
                                 {
@@ -762,8 +763,26 @@ namespace covid19_wld.Controllers
                                 latestSessionFor45.Add(vaccine_result_sessions);
                                 dict.Add(vaccine_result_sessions.date + "-" + "45" + "-" + vaccine_result_sessions.vaccine, vaccine_result_sessions);
                             }
+                            else
+                            {
+                                sessionsForUnknownAge = vaccine_result_sessions.available_capacity + "\n" + vaccine_result_sessions.available_capacity_dose1 + "\n" + vaccine_result_sessions.available_capacity_dose2 + "\n" + vaccine_result_sessions.vaccine + "\n" + vaccine_result_sessions.min_age_limit;
+                                sessionsByDate.Add(new KeyValuePair<string, string>(vaccine_result_sessions.date, sessionsForUnknownAge));
+                                vaccine_result_sessions.allDetails = sessionsForUnknownAge;
+                                List<bool> result_date = new List<bool>();
+                                foreach (var ready in old_vaccinedates)
+                                {
+                                    result_date.Add(vaccine_result_sessions.date.Equals(ready));
+                                    if (vaccine_result_sessions.date.Equals(ready))
+                                    {
+                                        vaccine_result_sessions.vaccineAvailableDisplay = "Available";
+                                        vaccine_result_sessions.vaccineAvailableForMultipleAgesDisplay = false;
+                                    }
+                                }
+                                latestSessionFor45.Add(vaccine_result_sessions);
+                                dict.Add(vaccine_result_sessions.date + "-" + vaccine_result_sessions.min_age_limit.ToString() + "-" + vaccine_result_sessions.vaccine, vaccine_result_sessions);
+                            }
 
-                            listOfSessionsByDate.Add(new KeyValuePair<string, VaccineCenterByPin.Session>(vaccine_result_sessions.date, vaccine_result_sessions));                                             
+                            listOfSessionsByDate.Add(new KeyValuePair<string, VaccineCenterByPin.Session>(vaccine_result_sessions.date, vaccine_result_sessions));
                         }
                         if (vaccine_result.sessions.Count() < 15 && dict.Count > 0 && (latestSessionFor18.Count > 0 || latestSessionFor45.Count > 0))
                         {
@@ -773,25 +792,26 @@ namespace covid19_wld.Controllers
                                 var keys = allKeys.OrderBy(x => DateTime.ParseExact(x, "dd MMMM yyyy", CultureInfo.InvariantCulture)).ToList();
                                 var missedDaysInSessions = old_vaccinedates.Except(allKeys).ToList();
                                 missedDaysInSessions.Sort();
-                                
+
                                 Dictionary<string, VaccineCenterByPin.Session> dict2 = new Dictionary<string, VaccineCenterByPin.Session>();
                                 Dictionary<string, List<VaccineCenterByPin.Session>> resultdict = new Dictionary<string, List<VaccineCenterByPin.Session>>();
                                 foreach (var result in missedDaysInSessions)
-                                {                                    
+                                {
                                     dict2.Add(result, new VaccineCenterByPin.Session { date = result, vaccineAvailableDisplay = "NotAvailable" });
-                                    
-                                }                                
+
+                                }
                                 dict2.ToList().ForEach(x => dict.Add(x.Key, x.Value));// Merge two Dictionary                                
-                                var dictValues = (from d in dict select d.Value).Distinct().ToList();                                
-                                
+                                var dictValues = (from d in dict select d.Value).Distinct().ToList();
+
                                 foreach (var resultDate in old_vaccinedates)
                                 {
-                                    var resultDictValues = dictValues.Where(x => x.date.Equals(resultDate)).ToList();
+                                    var resultDictValuesByDate = dictValues.Where(x => x.date.Equals(resultDate)).ToList();
+                                    var resultDictValues = resultDictValuesByDate.OrderBy(x => x.vaccine).ToList();
                                     resultdict.Add(resultDate, resultDictValues);
                                 }
 
                                 vaccine_result.displaySessionsOnUI = resultdict;
-                            }                            
+                            }
                         }
                     }
                 }
@@ -807,16 +827,17 @@ namespace covid19_wld.Controllers
 
                 var vaccineAddressDetails = vaccine.centers.OrderBy(x => x.name).Distinct().ToList();
 
-                foreach(var resultAddress in vaccineAddressDetails)
+                foreach (var resultAddress in vaccineAddressDetails)
                 {
                     string addressDetails = resultAddress.name + "\n" + resultAddress.address + "\n" + resultAddress.state_name + ", " + resultAddress.pincode + "\n" + "Timings: " + resultAddress.from + " - " + resultAddress.to + "\n" + "Type: " + resultAddress.fee_type + "\n";
-                    if (resultAddress.vaccine_fees != null) {
+                    if (resultAddress.vaccine_fees != null)
+                    {
                         foreach (var fees in resultAddress.vaccine_fees)
                         {
                             addressDetails += "\n" + "<u>" + $"{fees.vaccine}: Rs." + fees.fee + "</u>";
                         }
                     }
-                    
+
                     addressForUI.Add(addressDetails);
                 }
 
@@ -827,7 +848,7 @@ namespace covid19_wld.Controllers
                     return Json(new { success = false, vaccine, addressForUI, sessionsForUI, old_vaccinedates });
                 }
                 else
-                {                    
+                {
                     var vaccineDetails = vaccine.centers.OrderBy(x => x.name).Distinct().ToList();
                     return Json(new { success = true, vaccine, addressForUI, sessionsForUI, old_vaccinedates, sessionsByDate, vaccineDetails });
                 }
@@ -841,7 +862,7 @@ namespace covid19_wld.Controllers
                 this.telemetry.TrackEvent("Vaccine Info Page Failed- Post method");
                 return View("ErrorPage");
             }
-        }        
+        }
 
         private async Task<VaccineCenterByPin> GetVaccineByPin(string pincode, string date)
         {

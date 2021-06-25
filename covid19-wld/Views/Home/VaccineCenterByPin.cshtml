@@ -123,13 +123,13 @@
                     var urlLocation = '@Url.Action("Vaccine", "Home")';
                     urlLocation = urlLocation + '?pincode=' + inputpincode + '&date=' + date + '&nextweek=' + 'false' + '&prevweek=' + 'false';
                     $("#prevWeekItem").addClass("disabled");
-                    
+
                     $.ajax({
                         type: 'POST',
                         dataType: 'json',
                         url: urlLocation,
                         contentType: "application/json; charset=utf-8",
-                        beforeSend: function (xhr) { // RequestVerificationToken is required since we have added AutoValidateAntiforgeryTokenAttribute in the Startup.cs
+                        beforeSend: function (xhr) {
                             xhr.setRequestHeader("RequestVerificationToken",
                                 $('input:hidden[name="__RequestVerificationToken"]').val());
                         },
@@ -154,18 +154,18 @@
                                         ' </tr>');
                                 $("#tabledata_vaccine").find("tr:gt(0)").remove();
                                 $.each(result.vaccineDetails, function (index, value) {
-                                    
-                                    var dates = [$('#vaccineDate_0').text().trim(), $('#vaccineDate_1').text().trim(), $('#vaccineDate_2').text().trim(), $('#vaccineDate_3').text().trim(), $('#vaccineDate_4').text().trim(), $('#vaccineDate_5').text().trim(), $('#vaccineDate_6').text().trim()];                                    
+
+                                    var dates = [$('#vaccineDate_0').text().trim(), $('#vaccineDate_1').text().trim(), $('#vaccineDate_2').text().trim(), $('#vaccineDate_3').text().trim(), $('#vaccineDate_4').text().trim(), $('#vaccineDate_5').text().trim(), $('#vaccineDate_6').text().trim()];
                                     $('#tbody_vaccine').append(
                                         '<tr id="vaccineList_' + index + '"> ' +
                                         '<th scope="row"> <pre>' + result.addressForUI[index] + '</pre> </th>' +
-                                        '</tr >').append(                                        
+                                        '</tr >').append(
 
                                             $.each(result.vaccineDetails[index].displaySessionsOnUI, function (key, vaccineValues) {
-                                                
-                                                $.each(vaccineValues, function (indexVaccine, vaccineValues2) {                                                    
+
+                                                $.each(vaccineValues, function (indexVaccine, vaccineValues2) {
                                                     if (vaccineValues2.vaccineAvailableDisplay == "Available") {
-                                                        if (vaccineValues.length < 4 && indexVaccine == 0) {
+                                                        if (vaccineValues.length < 7 && indexVaccine == 0) {
                                                             if (vaccineValues2.available_capacity > 50) {
                                                                 $('tr#vaccineList_' + index).append(
                                                                     '<td id=datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style="text-align:center;"><br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
@@ -188,16 +188,16 @@
                                                             }
                                                             else if (vaccineValues2.available_capacity == 0) {
                                                                 $('tr#vaccineList_' + index).append(
-                                                                    '<td id=datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'style="text-align:center;"><br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<td id=datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style="text-align:center;"><br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
                                                                     '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
                                                                     '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
                                                                     '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
                                                                     '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
                                                                     '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
                                                                 );
-                                                            }                                                                                                                        
+                                                            }
                                                         }
-                                                        else if (vaccineValues.length < 4 && indexVaccine == 1) {
+                                                        else if (vaccineValues.length < 7 && indexVaccine == 1) {
                                                             if (vaccineValues2.available_capacity > 50) {
                                                                 $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
                                                                     '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
@@ -220,16 +220,16 @@
                                                             }
                                                             else if (vaccineValues2.available_capacity == 0) {
                                                                 $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
-                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
                                                                     '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
                                                                     '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
                                                                     '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
                                                                     '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
                                                                     '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
                                                                 );
-                                                            }                                                                                                                       
+                                                            }
                                                         }
-                                                        else if (vaccineValues.length < 4 && indexVaccine == 2) {                                                            
+                                                        else if (vaccineValues.length < 7 && indexVaccine == 2) {
                                                             if (vaccineValues2.available_capacity > 50) {
                                                                 $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
                                                                     '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
@@ -252,7 +252,7 @@
                                                             }
                                                             else if (vaccineValues2.available_capacity == 0) {
                                                                 $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
-                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
                                                                     '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
                                                                     '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
                                                                     '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
@@ -261,7 +261,7 @@
                                                                 );
                                                             }
                                                         }
-                                                        else if (vaccineValues.length < 4 && indexVaccine == 3) {
+                                                        else if (vaccineValues.length < 7 && indexVaccine == 3) {
                                                             if (vaccineValues2.available_capacity > 50) {
                                                                 $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
                                                                     '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
@@ -284,7 +284,103 @@
                                                             }
                                                             else if (vaccineValues2.available_capacity == 0) {
                                                                 $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
-                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                        }
+                                                        else if (vaccineValues.length < 7 && indexVaccine == 4) {
+                                                            if (vaccineValues2.available_capacity > 50) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                            else if (vaccineValues2.available_capacity <= 50 && vaccineValues2.available_capacity != 0) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-danger" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                            else if (vaccineValues2.available_capacity == 0) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                        }
+                                                        else if (vaccineValues.length < 7 && indexVaccine == 5) {
+                                                            if (vaccineValues2.available_capacity > 50) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                            else if (vaccineValues2.available_capacity <= 50 && vaccineValues2.available_capacity != 0) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-danger" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                            else if (vaccineValues2.available_capacity == 0) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                        }
+                                                        else if (vaccineValues.length < 7 && indexVaccine == 6) {
+                                                            if (vaccineValues2.available_capacity > 50) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                            else if (vaccineValues2.available_capacity <= 50 && vaccineValues2.available_capacity != 0) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-danger" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                            else if (vaccineValues2.available_capacity == 0) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
                                                                     '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
                                                                     '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
                                                                     '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
@@ -330,10 +426,10 @@
                                                     else {
                                                         $('tr#vaccineList_' + index).append('<td> <pre><b> N/A </b></pre> </td>');
                                                     }
-                                                                                                                                                                    
-                                                });                                                                                        
-                                            }));                                    
-                                });                                
+
+                                                });
+                                            }));
+                                });
                             }
                             else if (result.vaccineDataEmpty == true && result.success == false) {
                                 $("#vaccineTableHeader").remove();
@@ -353,7 +449,7 @@
                                 alert("Vaccination Details Not Available. Please hard reload the page and try again after some time.");
                             }
                             else {
-                                $("#vaccineTableHeader").remove();                                
+                                $("#vaccineTableHeader").remove();
                                 $('#vaccine_data').show();
                                 $('#thead_vaccine').append(
                                     '<tr id="vaccineTableHeader">' +
@@ -422,7 +518,7 @@
                         dataType: 'json',
                         url: urlLocation,
                         contentType: "application/json; charset=utf-8",
-                        beforeSend: function (xhr) { // RequestVerificationToken is required since we have added AutoValidateAntiforgeryTokenAttribute in the Startup.cs
+                        beforeSend: function (xhr) {
                             xhr.setRequestHeader("RequestVerificationToken",
                                 $('input:hidden[name="__RequestVerificationToken"]').val());
                         },
@@ -454,11 +550,11 @@
                                         '<tr id="vaccineList_' + index + '"> ' +
                                         '<th scope="row"> <pre>' + result.addressForUI[index] + '</pre> </th>' +
                                         '</tr >').append(
-                                            $.each(result.vaccineDetails[index].displaySessionsOnUI, function (key, vaccineValues) {                                                
+                                            $.each(result.vaccineDetails[index].displaySessionsOnUI, function (key, vaccineValues) {
 
-                                                $.each(vaccineValues, function (indexVaccine, vaccineValues2) {                                                    
+                                                $.each(vaccineValues, function (indexVaccine, vaccineValues2) {
                                                     if (vaccineValues2.vaccineAvailableDisplay == "Available") {
-                                                        if (vaccineValues.length < 4 && indexVaccine == 0) {
+                                                        if (vaccineValues.length < 7 && indexVaccine == 0) {
                                                             if (vaccineValues2.available_capacity > 50) {
                                                                 $('tr#vaccineList_' + index).append(
                                                                     '<td id=datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style="text-align:center;"><br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
@@ -481,7 +577,7 @@
                                                             }
                                                             else if (vaccineValues2.available_capacity == 0) {
                                                                 $('tr#vaccineList_' + index).append(
-                                                                    '<td id=datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'style="text-align:center;"><br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<td id=datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style="text-align:center;"><br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
                                                                     '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
                                                                     '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
                                                                     '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
@@ -490,7 +586,7 @@
                                                                 );
                                                             }
                                                         }
-                                                        else if (vaccineValues.length < 4 && indexVaccine == 1) {
+                                                        else if (vaccineValues.length < 7 && indexVaccine == 1) {
                                                             if (vaccineValues2.available_capacity > 50) {
                                                                 $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
                                                                     '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
@@ -513,7 +609,7 @@
                                                             }
                                                             else if (vaccineValues2.available_capacity == 0) {
                                                                 $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
-                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
                                                                     '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
                                                                     '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
                                                                     '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
@@ -522,7 +618,7 @@
                                                                 );
                                                             }
                                                         }
-                                                        else if (vaccineValues.length < 4 && indexVaccine == 2) {
+                                                        else if (vaccineValues.length < 7 && indexVaccine == 2) {
                                                             if (vaccineValues2.available_capacity > 50) {
                                                                 $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
                                                                     '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
@@ -545,7 +641,7 @@
                                                             }
                                                             else if (vaccineValues2.available_capacity == 0) {
                                                                 $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
-                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
                                                                     '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
                                                                     '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
                                                                     '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
@@ -554,7 +650,7 @@
                                                                 );
                                                             }
                                                         }
-                                                        else if (vaccineValues.length < 4 && indexVaccine == 3) {
+                                                        else if (vaccineValues.length < 7 && indexVaccine == 3) {
                                                             if (vaccineValues2.available_capacity > 50) {
                                                                 $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
                                                                     '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
@@ -577,7 +673,103 @@
                                                             }
                                                             else if (vaccineValues2.available_capacity == 0) {
                                                                 $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
-                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                        }
+                                                        else if (vaccineValues.length < 7 && indexVaccine == 4) {
+                                                            if (vaccineValues2.available_capacity > 50) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                            else if (vaccineValues2.available_capacity <= 50 && vaccineValues2.available_capacity != 0) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-danger" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                            else if (vaccineValues2.available_capacity == 0) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                        }
+                                                        else if (vaccineValues.length < 7 && indexVaccine == 5) {
+                                                            if (vaccineValues2.available_capacity > 50) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                            else if (vaccineValues2.available_capacity <= 50 && vaccineValues2.available_capacity != 0) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-danger" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                            else if (vaccineValues2.available_capacity == 0) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                        }
+                                                        else if (vaccineValues.length < 7 && indexVaccine == 6) {
+                                                            if (vaccineValues2.available_capacity > 50) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                            else if (vaccineValues2.available_capacity <= 50 && vaccineValues2.available_capacity != 0) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-danger" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                            else if (vaccineValues2.available_capacity == 0) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
                                                                     '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
                                                                     '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
                                                                     '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
@@ -715,7 +907,7 @@
                         dataType: 'json',
                         url: urlLocation,
                         contentType: "application/json; charset=utf-8",
-                        beforeSend: function (xhr) { // RequestVerificationToken is required since we have added AutoValidateAntiforgeryTokenAttribute in the Startup.cs
+                        beforeSend: function (xhr) {
                             xhr.setRequestHeader("RequestVerificationToken",
                                 $('input:hidden[name="__RequestVerificationToken"]').val());
                         },
@@ -747,11 +939,11 @@
                                         '<tr id="vaccineList_' + index + '"> ' +
                                         '<th scope="row"> <pre>' + result.addressForUI[index] + '</pre> </th>' +
                                         '</tr >').append(
-                                            $.each(result.vaccineDetails[index].displaySessionsOnUI, function (key, vaccineValues) {                                                
+                                            $.each(result.vaccineDetails[index].displaySessionsOnUI, function (key, vaccineValues) {
 
-                                                $.each(vaccineValues, function (indexVaccine, vaccineValues2) {                                                    
+                                                $.each(vaccineValues, function (indexVaccine, vaccineValues2) {
                                                     if (vaccineValues2.vaccineAvailableDisplay == "Available") {
-                                                        if (vaccineValues.length < 4 && indexVaccine == 0) {
+                                                        if (vaccineValues.length < 7 && indexVaccine == 0) {
                                                             if (vaccineValues2.available_capacity > 50) {
                                                                 $('tr#vaccineList_' + index).append(
                                                                     '<td id=datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style="text-align:center;"><br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
@@ -774,7 +966,7 @@
                                                             }
                                                             else if (vaccineValues2.available_capacity == 0) {
                                                                 $('tr#vaccineList_' + index).append(
-                                                                    '<td id=datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'style="text-align:center;"><br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<td id=datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style="text-align:center;"><br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
                                                                     '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
                                                                     '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
                                                                     '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
@@ -783,7 +975,7 @@
                                                                 );
                                                             }
                                                         }
-                                                        else if (vaccineValues.length < 4 && indexVaccine == 1) {
+                                                        else if (vaccineValues.length < 7 && indexVaccine == 1) {
                                                             if (vaccineValues2.available_capacity > 50) {
                                                                 $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
                                                                     '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
@@ -806,7 +998,7 @@
                                                             }
                                                             else if (vaccineValues2.available_capacity == 0) {
                                                                 $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
-                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
                                                                     '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
                                                                     '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
                                                                     '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
@@ -815,7 +1007,7 @@
                                                                 );
                                                             }
                                                         }
-                                                        else if (vaccineValues.length < 4 && indexVaccine == 2) {
+                                                        else if (vaccineValues.length < 7 && indexVaccine == 2) {
                                                             if (vaccineValues2.available_capacity > 50) {
                                                                 $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
                                                                     '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
@@ -838,7 +1030,7 @@
                                                             }
                                                             else if (vaccineValues2.available_capacity == 0) {
                                                                 $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
-                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
                                                                     '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
                                                                     '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
                                                                     '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
@@ -847,7 +1039,7 @@
                                                                 );
                                                             }
                                                         }
-                                                        else if (vaccineValues.length < 4 && indexVaccine == 3) {
+                                                        else if (vaccineValues.length < 7 && indexVaccine == 3) {
                                                             if (vaccineValues2.available_capacity > 50) {
                                                                 $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
                                                                     '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
@@ -870,7 +1062,103 @@
                                                             }
                                                             else if (vaccineValues2.available_capacity == 0) {
                                                                 $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
-                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                        }
+                                                        else if (vaccineValues.length < 7 && indexVaccine == 4) {
+                                                            if (vaccineValues2.available_capacity > 50) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                            else if (vaccineValues2.available_capacity <= 50 && vaccineValues2.available_capacity != 0) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-danger" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                            else if (vaccineValues2.available_capacity == 0) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                        }
+                                                        else if (vaccineValues.length < 7 && indexVaccine == 5) {
+                                                            if (vaccineValues2.available_capacity > 50) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                            else if (vaccineValues2.available_capacity <= 50 && vaccineValues2.available_capacity != 0) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-danger" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                            else if (vaccineValues2.available_capacity == 0) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                        }
+                                                        else if (vaccineValues.length < 7 && indexVaccine == 6) {
+                                                            if (vaccineValues2.available_capacity > 50) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-success" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                            else if (vaccineValues2.available_capacity <= 50 && vaccineValues2.available_capacity != 0) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-danger" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
+                                                                    '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
+                                                                    '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
+                                                                    '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
+                                                                    '<b>Age: </b>' + vaccineValues2.min_age_limit + '+' + '<br />' +
+                                                                    '<b>Slots: </b>' + vaccineValues2.slots + '<br /><br /></p>'
+                                                                );
+                                                            }
+                                                            else if (vaccineValues2.available_capacity == 0) {
+                                                                $('td#datacell_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id).append(
+                                                                    '<p id =p_' + vaccineValues2.date.replace(/\s/g, '') + '_' + result.vaccineDetails[index].center_id + ' ' + 'class="table-dark" style = "text-align:center;" > <br><b>Avl. Capacity: </b>' + vaccineValues2.available_capacity + '<br />' +
                                                                     '<b>Avl. Dose1: </b>' + vaccineValues2.available_capacity_dose1 + '<br />' +
                                                                     '<b>Avl. Dose2: </b>' + vaccineValues2.available_capacity_dose2 + '<br />' +
                                                                     '<b>' + vaccineValues2.vaccine + '</b>' + '<br />' +
@@ -989,8 +1277,7 @@
                         }
                     });
               });
-    });               
+    });
     </script>
 </body>
 </html>
-
