@@ -784,7 +784,7 @@ namespace covid19_wld.Controllers
 
                             listOfSessionsByDate.Add(new KeyValuePair<string, VaccineCenterByPin.Session>(vaccine_result_sessions.date, vaccine_result_sessions));
                         }
-                        if (vaccine_result.sessions.Count() < 15 && dict.Count > 0 && (latestSessionFor18.Count > 0 || latestSessionFor45.Count > 0))
+                        if (dict.Count > 0 && (latestSessionFor18.Count > 0 || latestSessionFor45.Count > 0))
                         {
                             if (listOfSessionsByDate.Count > 0)
                             {
@@ -938,8 +938,9 @@ namespace covid19_wld.Controllers
 
         private async Task<Location_Weather.ClientIPAddress> GetIpaddress()
         {
-            //string clientIPAddress = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();//Gives you client IPAddress
-            var ip = "27.59.201.51"; /* Please change this IP Address*/
+            //string clientIPAddress = _accessor.HttpContext.Connection.RemoteIpAddress.ToString(); //Gives you client IPAddress
+            string testingIPAddress = "27.59.201.51"; 
+            var ip = testingIPAddress; /* Replace testingIPAddress to clientIPAddress while deploying to PROD*/
             Location_Weather.ClientIPAddress data = null;
             using (var client = new HttpClient())
             {
@@ -966,8 +967,9 @@ namespace covid19_wld.Controllers
 
         private async Task<Location_Weather.ValidIPAddress> GetValidIpaddress()
         {
-            //string clientIPAddress = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();//Gives you client IPAddress
-            var ip = "27.59.201.51"; /* Please change this IP Address*/
+            //string clientIPAddress = _accessor.HttpContext.Connection.RemoteIpAddress.ToString(); //Gives you client IPAddress
+            string testingIPAddress = "27.59.201.51"; 
+            var ip = testingIPAddress; /* Replace testingIPAddress to clientIPAddress while deploying to PROD*/
             Location_Weather.ValidIPAddress data = null;
             using (var client = new HttpClient())
             {
